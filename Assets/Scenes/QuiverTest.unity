@@ -471,6 +471,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.035
       objectReference: {fileID: 0}
+    - target: {fileID: 4841617704044722354, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114362516732020910, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6365035678689147468, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
       propertyPath: m_camera
       value: 

@@ -18,6 +18,8 @@ namespace UnityStandardAssets._2D
         public ArrowBehaviorLeft arrowLeft;     // Starting point for arrow when facing left.
         public ArrowBehaviorRight arrowRight;   // Starting point for arrow when facing right.
         public Transform arrowOffset;
+        private GameObject grapple;
+        private SpriteRenderer grappleSprite;
 
         const float k_GroundedRadius = .2f;     // Radius of the overlap circle to determine if grounded
         const float k_CeilingRadius = .01f;     // Radius of the overlap circle to determine if the player can stand up
@@ -37,6 +39,8 @@ namespace UnityStandardAssets._2D
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            grapple = GameObject.Find("GrappleGun");
+            grappleSprite = grapple.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
         }
 
         private void FixedUpdate()
@@ -162,16 +166,23 @@ namespace UnityStandardAssets._2D
         {
             // Switch the way the player is labelled as facing.       
             m_FacingRight = !m_FacingRight;
+            
+
 
             // Multiply the player's x local scale by -1.
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
 
+            // Flip grappling hook sprite.
+            grappleSprite.flipY = !grappleSprite.flipY;
+
             /*
                 Flip grappling hook again so it's not broken. Find better way to do this
                 If character gets new child object before (2), it's broken.
             */
+            // Debug.Log(this.gameObject.transform.GetChild(2).name);
+            
             this.gameObject.transform.GetChild(2).localScale = theScale;
         }
     }
