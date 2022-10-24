@@ -123,37 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &89194932 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8290749072627018343, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
-  m_PrefabInstance: {fileID: 8088498626397518488}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &89194940
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89194932}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0010040812, y: -0.060579948}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.14192641, y: 0.0388401}
-  m_EdgeRadius: 0
 --- !u!1 &497548154
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +751,11 @@ Transform:
   m_Father: {fileID: 948063391}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &1467660136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 309702158171023225, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
+  m_PrefabInstance: {fileID: 865595261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1541242323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,13 +1070,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8738056030854435177, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
-      propertyPath: speed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8738056030854435177, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
-      propertyPath: jumpHeight
-      value: 2000
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1467660136}
+    - target: {fileID: 89194948, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1467660136}
     - target: {fileID: 6620832420455961613, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
       propertyPath: m_RootOrder
       value: 6
