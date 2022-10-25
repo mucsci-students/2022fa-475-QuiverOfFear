@@ -28,6 +28,9 @@ namespace UnityStandardAssets._2D
         public bool m_FacingRight = true;       // For determining which way the player is currently facing.
         private bool isJumping;                 // Whether or not the player is in the air with jumpHoldDuration.
         private bool isAttacking;
+        public float shootCooldown = 1.0f;
+        private float nextFireTime = 0f;
+        public bool didShoot;
 
         public float jumpHoldDuration = 0.25f;  // Max duration to hold space and gain velocity.
         public float jumpHoldCounter;           // Control for jumpHoldDuration
@@ -41,6 +44,10 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             grapple = GameObject.Find("GrappleGun");
             grappleSprite = grapple.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        }
+
+        private void Start(){
+            didShoot = false;
         }
 
         private void FixedUpdate()
@@ -58,6 +65,7 @@ namespace UnityStandardAssets._2D
             
             // Set Ground for animation
             m_Anim.SetBool("Ground", m_Grounded);
+            m_Anim.SetBool("canAttack", false);
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
@@ -80,16 +88,18 @@ namespace UnityStandardAssets._2D
                 Shooting left and right is a giant pain in the ass. 
                 For the time being, different prefabs for each side.
             */
-            if(fire)
+
+            if(Time.time > nextFireTime)
             {
-                if(!m_FacingRight)
+                m_Anim.SetBool("canAttack", true);         
+                    
+                if(fire)
                 {
-                    Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
-                }
-                else {
-                    Instantiate(arrowRight, arrowOffset.position, transform.rotation);
+                    Shoot();
+                    nextFireTime = Time.time + shootCooldown;
                 }
             }
+
 
 
             // Only control the player if grounded or airControl is turned on
@@ -159,6 +169,20 @@ namespace UnityStandardAssets._2D
                 isJumping = false; 
                 jumpHoldCounter = 0;
             }
+        }
+
+        void Shoot(){
+
+            if(!m_FacingRight)
+            {
+                Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
+            }
+            else 
+            {
+                Instantiate(arrowRight, arrowOffset.position, transform.rotation);
+            }
+
+            didShoot = true;
         }
 
         // Flip player depending on the way they are / should be facing.
