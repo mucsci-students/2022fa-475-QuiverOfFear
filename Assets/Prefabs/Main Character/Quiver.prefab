@@ -78,6 +78,8 @@ MonoBehaviour:
   arrowRight: {fileID: 8235137844374129304, guid: 01c9cb11203a84643b50a759d153129a, type: 3}
   arrowOffset: {fileID: 3075248345484531038}
   m_FacingRight: 1
+  shootCooldown: 1
+  didShoot: 0
   jumpHoldDuration: 0.2
   jumpHoldCounter: 0
 --- !u!50 &455205380665267162
@@ -418,9 +420,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1977281959
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
