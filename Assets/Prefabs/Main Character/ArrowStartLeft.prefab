@@ -65,8 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297da11713295cd4a8c0dcd279df34d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  arrowDeleteTimer: 4.5
+  force: 40
 --- !u!50 &6646191086555782543
 Rigidbody2D:
   serializedVersion: 4
@@ -79,15 +78,15 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 0.4
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.1
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!212 &7089192809617447814
 SpriteRenderer:
   m_ObjectHideFlags: 0

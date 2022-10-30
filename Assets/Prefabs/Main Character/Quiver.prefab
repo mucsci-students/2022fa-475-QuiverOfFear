@@ -74,12 +74,9 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  arrowLeft: {fileID: 4436419748386282005, guid: 9b3ab3c81d4bb4b44aa64934ce2acc2d, type: 3}
-  arrowRight: {fileID: 8235137844374129304, guid: 01c9cb11203a84643b50a759d153129a, type: 3}
-  arrowOffset: {fileID: 3075248345484531038}
   m_FacingRight: 1
-  shootCooldown: 1
   didShoot: 0
+  shootCooldown: 1
   jumpHoldDuration: 0.2
   jumpHoldCounter: 0
 --- !u!50 &455205380665267162
@@ -480,6 +477,37 @@ LineRenderer:
     generateLightingData: 1
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &2208787472303748479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3736156252377731637}
+  m_Layer: 6
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3736156252377731637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208787472303748479}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.145, y: 0.009, z: 0}
+  m_LocalScale: {x: 0.546231, y: 0.48243415, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3075248345484531038}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3329460886340728247
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3075248345484531038}
+  - component: {fileID: 450622676540952395}
   m_Layer: 6
   m_Name: ArrowOffset
   m_TagString: Untagged
@@ -630,13 +659,42 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7735407936361983336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.332, y: -0.067, z: 0}
+  m_LocalPosition: {x: 0.35, y: -0.016, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3736156252377731637}
   m_Father: {fileID: 8652148900259245739}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &450622676540952395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7735407936361983336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f6a0198cbb3b04abc5ef58dce7c357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotPoint: {fileID: 3736156252377731637}
+  shot: {fileID: 6640166795695993447, guid: 9b3ab3c81d4bb4b44aa64934ce2acc2d, type: 3}
+  player: {fileID: 309702158171023225}
+  point: {fileID: 502864880167873515, guid: abed219e0d457854c88199711f1a271b, type: 3}
+  numberOfPoints: 40
+  spaceBetweenPoints: 0.025
+  showTrajectory: 0
+  shootCooldown: 0.75
+  didShoot: 0
+  arrowLeft: {fileID: 4436419748386282005, guid: 9b3ab3c81d4bb4b44aa64934ce2acc2d, type: 3}
+  arrowRight: {fileID: 8235137844374129304, guid: 01c9cb11203a84643b50a759d153129a, type: 3}
+  arrowOffset: {fileID: 3075248345484531038}
+  forcePower: 500
+  impulsePower: 20
+  maxForceHoldTime: 0.5
+  arrowType: 0
 --- !u!1 &7901470547478784664
 GameObject:
   m_ObjectHideFlags: 0

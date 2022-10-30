@@ -1,37 +1,40 @@
 using System;
 using UnityEngine; 
-// using UnityEngine.InputSystem;
 
 namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float m_JumpForce = 40f;                  // Amount of force added when the player jumps.
-        [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
-        [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+        /* --- ONE SCRIPT FOR EVERYTHING WOO!! --- */           // Please don't show Dr. Zoppetti this, he'd be so disappointed. :(
+        [SerializeField] private float m_MaxSpeed = 10f;        // The fastest the player can travel in the x axis.
+        [SerializeField] private float m_JumpForce = 40f;       // Amount of force added when the player jumps.
+        [SerializeField] private bool m_AirControl = false;     // Whether or not a player can steer while jumping.
+        [SerializeField] private LayerMask m_WhatIsGround;      // A mask determining what is ground to the character.
 
-        private Animator m_Anim;                // Reference to the player's animator.
-        private Rigidbody2D m_Rigidbody2D;      // Reference to the player's Rigidbody.
-        private Transform m_GroundCheck;        // A position marking where to check if the player is grounded.
-        private Transform m_CeilingCheck;       // A position marking where to check for ceilings.
-        public ArrowBehaviorLeft arrowLeft;     // Starting point for arrow when facing left.
-        public ArrowBehaviorRight arrowRight;   // Starting point for arrow when facing right.
-        public Transform arrowOffset;
-        private GameObject grapple;
-        private SpriteRenderer grappleSprite;
+        private Animator m_Anim;                                // Reference to the player's animator.
+        private Rigidbody2D m_Rigidbody2D;                      // Reference to the player's Rigidbody.
+        private Transform m_GroundCheck;                        // A position marking where to check if the player is grounded.
+        private Transform m_CeilingCheck;                       // A position marking where to check for ceilings.
+        private GameObject grapple;                             // Reference to grapple gameObject.
 
-        const float k_GroundedRadius = .2f;     // Radius of the overlap circle to determine if grounded
-        const float k_CeilingRadius = .01f;     // Radius of the overlap circle to determine if the player can stand up
-        const float m_SneakSpeed = 0f;         // Movement speed when sneaking.
-        private bool m_Grounded;                // Whether or not the player is grounded.
-        public bool m_FacingRight = true;       // For determining which way the player is currently facing.
-        private bool isJumping;                 // Whether or not the player is in the air with jumpHoldDuration.
-        private bool isAttacking;
-        public float shootCooldown = 1.0f;
-        private float nextFireTime = 0f;
-        public bool didShoot;
-
+        const float k_GroundedRadius = .2f;                     // Radius of the overlap circle to determine if grounded.
+        const float k_CeilingRadius = .01f;                     // Radius of the overlap circle to determine if the player can stand up.
+        const float m_SneakSpeed = 0f;                          // Movement speed when sneaking.
+        private bool m_Grounded;                                // Whether or not the player is grounded.
+        public bool m_FacingRight = true;                       // For determining which way the player is currently facing.
+        private bool isJumping;                                 // Whether or not the player is in the air with jumpHoldDuration.
+        
+        // private bool showTrajectory;
+        // public int numberOfPoints;                              // Amount of of points to display in the array.
+        // public float spaceBetweenPoints;                        // Distance between points along the trajectory.
+        public bool didShoot;                                   // I have no clue what I am doing with all these different attacking bools.
+        private bool isAttacking;                               // I'm too scared to delete.
+        // private bool canShootRight;                             /*     These I need. Controls whether or not mouse position is in a valid   */
+        // private bool canShootLeft;                              /*                  direction to shoot for each side.                       */
+        public float shootCooldown = 1.0f;                      // Max cooldown in between shots.
+        private float nextFireTime = 0f;                        // Assists in counting time between shots.
+        
+        [Header("Jump Controls:")]
         public float jumpHoldDuration = 0.25f;  // Max duration to hold space and gain velocity.
         public float jumpHoldCounter;           // Control for jumpHoldDuration
 
@@ -43,13 +46,14 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             grapple = GameObject.Find("GrappleGun");
-            grappleSprite = grapple.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
         }
 
-        private void Start(){
+        private void Start()
+        {
             didShoot = false;
         }
 
+        
         private void FixedUpdate()
         {
             m_Grounded = false;
@@ -72,35 +76,25 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("FacingRight", m_FacingRight);
             m_Anim.SetBool("Attacking", isAttacking);
 
-            // Debug.Log(m_Grounded);
         }
 
-        public void Move(float move, bool fire, bool jump, bool jump_2, bool sneak)
+        public void Move(float move, bool fire, bool jump, bool jump_2, bool sneak, float shotForce)
         {
  
             // Setting variables in the animator.
             m_Anim.SetBool("Attacking", fire);
             m_Anim.SetFloat("yPos", m_Rigidbody2D.position.y);
             m_Anim.SetBool("Sneak", sneak);
-        
-
-            /* 
-                Shooting left and right is a giant pain in the ass. 
-                For the time being, different prefabs for each side.
-            */
 
             if(Time.time > nextFireTime)
             {
                 m_Anim.SetBool("canAttack", true);         
-                    
                 if(fire)
                 {
-                    Shoot();
+                    Shoot(shotForce);
                     nextFireTime = Time.time + shootCooldown;
                 }
             }
-
-
 
             // Only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
@@ -171,45 +165,30 @@ namespace UnityStandardAssets._2D
                 isJumping = false; 
                 jumpHoldCounter = 0;
             }
+
         }
 
-        void Shoot(){
+        void Shoot(float shotForce)
+        {
 
-            if(!m_FacingRight)
-            {
-                Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
-            }
-            else 
-            {
-                Instantiate(arrowRight, arrowOffset.position, transform.rotation);
-            }
-
-            didShoot = true;
         }
 
         // Flip player depending on the way they are / should be facing.
         private void Flip()
         {
+            SpriteRenderer grappleSprite = grapple.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
             // Switch the way the player is labelled as facing.       
             m_FacingRight = !m_FacingRight;
             
-
 
             // Multiply the player's x local scale by -1.
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
 
-            // Flip grappling hook sprite.
+            // Flip grappling hook sprite when player turns.
             grappleSprite.flipY = !grappleSprite.flipY;
-
-            /*
-                Flip grappling hook again so it's not broken. Find better way to do this
-                If character gets new child object before (2), it's broken.
-            */
-            // Debug.Log(this.gameObject.transform.GetChild(2).name);
-            
-            this.gameObject.transform.GetChild(2).localScale = theScale;
+            grappleSprite.transform.parent.localScale = theScale;  
         }
     }
 }

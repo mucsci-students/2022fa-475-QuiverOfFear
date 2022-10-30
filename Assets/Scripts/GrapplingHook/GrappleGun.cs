@@ -60,6 +60,7 @@ public class GrappleGun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             SetGrapplePoint();
+
         }
         else if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -83,6 +84,7 @@ public class GrappleGun : MonoBehaviour
                 }
             }
         }
+            
         else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             grappleRope.enabled = false;

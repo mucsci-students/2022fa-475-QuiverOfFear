@@ -8,7 +8,8 @@ namespace UnityStandardAssets._2D
         private PlatformerCharacter2D m_Character;
         private bool m_Jump_button;
         private bool m_Jump_down;
-                        
+        private float shootStartCounter;
+        private float shootReleaseCounter;        
         private bool fire;
         
 
@@ -30,8 +31,14 @@ namespace UnityStandardAssets._2D
 
             if(Input.GetButtonDown("Fire1"))
             {
+                shootStartCounter = Time.time;
+            }
+
+            if(Input.GetButtonUp("Fire1"))
+            {
+                shootReleaseCounter = Time.time - shootStartCounter;
                 fire = true;
-            }    
+            }  
         }
 
         private void FixedUpdate()
@@ -41,7 +48,7 @@ namespace UnityStandardAssets._2D
             float move = Input.GetAxis("Horizontal");
                      
             // Pass all parameters to the character control script.
-            m_Character.Move(move, fire, m_Jump_down, m_Jump_button, sneak);
+            m_Character.Move(move, fire, m_Jump_down, m_Jump_button, sneak, shootReleaseCounter);
 
             // Reset
             fire = false;
