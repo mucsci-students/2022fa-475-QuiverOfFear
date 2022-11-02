@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/QuiverTest.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MainMenu.unity
+    guid: c22358712955704498e8b226778ed275
+  - enabled: 1
+    path: Assets/Scenes/CaveEntrance.unity
+    guid: a759f37025878f141a48a04a9546176e
   m_configObjects: {}
