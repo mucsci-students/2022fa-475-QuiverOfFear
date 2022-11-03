@@ -659,6 +659,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlamingSkull
       objectReference: {fileID: 0}
+    - target: {fileID: 3773052386492378446, guid: 5b31934764e9b4a19838545a703b9e7c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3773052386492378449, guid: 5b31934764e9b4a19838545a703b9e7c, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1018,7 +1022,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.86}
 --- !u!1 &2140289994
 GameObject:
@@ -1160,7 +1164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5200258099464580069, guid: ece2484bd45434bb19d5736fd5e9334a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200258099464580077, guid: ece2484bd45434bb19d5736fd5e9334a, type: 3}
       propertyPath: m_RootOrder
@@ -1229,7 +1233,7 @@ PrefabInstance:
       objectReference: {fileID: 1467660136}
     - target: {fileID: 6620832420455961613, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6620832420455961613, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1274,6 +1278,10 @@ PrefabInstance:
     - target: {fileID: 8290749072627018343, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 8290749072627018343, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65eede682ee28374b83361dc6623ff74, type: 3}
