@@ -16,7 +16,7 @@ public class BackgroundParallax : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position = new Vector3(transform.position.x + parallaxSpeed * Time.deltaTime, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x + (parallaxSpeed * Time.deltaTime), transform.position.y, transform.position.z);
 
         if(transform.position.x > startPos + length)
             transform.position = new Vector3(startPos, transform.position.y, transform.position.z);
