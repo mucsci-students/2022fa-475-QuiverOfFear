@@ -91,7 +91,7 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetBool("canAttack", true);         
                 if(fire)
                 {
-                    Shoot(shotForce);
+                    // Shoot(shotForce);
                     nextFireTime = Time.time + shootCooldown;
                 }
             }
@@ -165,12 +165,6 @@ namespace UnityStandardAssets._2D
                 isJumping = false; 
                 jumpHoldCounter = 0;
             }
-
-        }
-
-        void Shoot(float shotForce)
-        {
-
         }
 
         // Flip player depending on the way they are / should be facing.
@@ -180,7 +174,6 @@ namespace UnityStandardAssets._2D
             // Switch the way the player is labelled as facing.       
             m_FacingRight = !m_FacingRight;
             
-
             // Multiply the player's x local scale by -1.
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;

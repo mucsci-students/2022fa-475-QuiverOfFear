@@ -25,6 +25,7 @@ public class Arrow : MonoBehaviour
     public float shootCooldown = 0.5f;
     private float nextFireTime = 0f;
     public bool didShoot;
+    public bool isPaused;
 
     public ArrowBehaviorLeft arrowLeft;                     // Starting point for arrow when facing left.
     public ArrowBehaviorRight arrowRight;
@@ -47,7 +48,7 @@ public class Arrow : MonoBehaviour
 
     [SerializeField] public ArrowShotType arrowType = ArrowShotType.ForceShot;
 
-    // Generates the prefab of opaque turtle shell a bunch of times.
+    // Generates the prefab of crosshair shell a bunch of times.
     private void Start() {
         showTrajectory = true;
         canShootLeft = false;
@@ -67,8 +68,9 @@ public class Arrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
         faceRight = anim.GetBool("FacingRight");
-        //Shoot();
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -104,7 +106,7 @@ public class Arrow : MonoBehaviour
 
         if(canShootLeft || canShootRight)
         {
-            Debug.Log(showTrajectory);
+            // Debug.Log(showTrajectory);
             // If left click is held down
             if(showTrajectory)
             {
@@ -140,34 +142,38 @@ public class Arrow : MonoBehaviour
     // Pew pew time.
     public void Shoot() 
     {
-        holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
-        Debug.Log(holdTimeNormalized);
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        GameObject pauseMenu = GameObject.Find("PauseMenu");
+        isPaused = pauseMenu.GetComponent<PauseMenu>().paused;
+        if(!isPaused)
+        {
+            holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
+            Debug.Log(holdTimeNormalized);
+            mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector2 direction = mousePos - transform.position;
-        // Vector2 direction = mousePos - ;
-        Vector2 rotation = transform.position - mousePos;
-        
-        // If ForceShot is selected.
-        if (arrowType == ArrowShotType.ForceShot)
-        {
-            shotPower = holdTimeNormalized * forcePower;
-        }
-        else
-        {
-            shotPower = holdTimeNormalized * impulsePower;
+            Vector2 direction = mousePos - transform.position;
+            Vector2 rotation = transform.position - mousePos;
             
-        }
-        if(!faceRight)
-        {
-            ArrowBehaviorLeft spawnArrowLeft = Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
-            spawnArrowLeft.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
-        }
-        else
-        {
-            ArrowBehaviorRight spawnArrowRight = Instantiate(arrowRight, arrowOffset.position, transform.rotation);
-            spawnArrowRight.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+            // If ForceShot is selected.
+            if (arrowType == ArrowShotType.ForceShot)
+            {
+                shotPower = holdTimeNormalized * forcePower;
+            }
+            else
+            {
+                shotPower = holdTimeNormalized * impulsePower;
+                
+            }
+            if(!faceRight)
+            {
+                ArrowBehaviorLeft spawnArrowLeft = Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
+                spawnArrowLeft.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+            }
+            else
+            {
+                ArrowBehaviorRight spawnArrowRight = Instantiate(arrowRight, arrowOffset.position, transform.rotation);
+                spawnArrowRight.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+            }
         }
 
     }

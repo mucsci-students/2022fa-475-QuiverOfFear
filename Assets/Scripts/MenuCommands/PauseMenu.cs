@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    private bool paused = false, homeOpen = false, pauseLastActive = false;
+    public bool paused = false;
+    private bool homeOpen = false, pauseLastActive = false;
     private Canvas pauseCanvas;
     public Canvas ingameCanvas;
     public Canvas homeCanvas;
