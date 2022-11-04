@@ -7,7 +7,8 @@ public class MusicStartToLoop : MonoBehaviour
 {
     public AudioClip startClip;
     public AudioClip loopClip;
-    void Start()
+
+    void OnEnable()
     {
         GetComponent<AudioSource> ().loop = true;
         StartCoroutine(playBGM());

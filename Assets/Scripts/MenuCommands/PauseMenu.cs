@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     private Canvas pauseCanvas;
     public Canvas ingameCanvas;
     public Canvas homeCanvas;
+    public AudioSource pauseSFX;
+    public AudioSource unpauseSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,12 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseUnpause() {
         paused = !paused;
+
+        if (paused)
+            pauseSFX.Play();
+        else
+            unpauseSFX.Play();
+
         homeOpen = false;
     }
 
