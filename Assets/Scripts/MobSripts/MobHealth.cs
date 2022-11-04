@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class MobHealth : MonoBehaviour
 {
+    private AudioSource hitSFX;
+
     public int health;
     public ParticleSystem damageEffect;
+
+    void Start()
+    {
+        hitSFX = GetComponent<AudioSource>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -13,7 +20,7 @@ public class MobHealth : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerProjectile"))
         {
             --health;
-
+            hitSFX.Play();
             Instantiate(damageEffect, transform.position, Quaternion.identity);
 
             //Destroy if health is equal to 0

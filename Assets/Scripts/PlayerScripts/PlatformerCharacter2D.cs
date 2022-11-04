@@ -23,8 +23,8 @@ namespace UnityStandardAssets._2D
         private bool m_Grounded;                                // Whether or not the player is grounded.
         public bool m_FacingRight = true;                       // For determining which way the player is currently facing.
         private bool isJumping;                                 // Whether or not the player is in the air with jumpHoldDuration.
-        
         // private bool showTrajectory;
+        
         // public int numberOfPoints;                              // Amount of of points to display in the array.
         // public float spaceBetweenPoints;                        // Distance between points along the trajectory.
         public bool didShoot;                                   // I have no clue what I am doing with all these different attacking bools.
@@ -38,6 +38,8 @@ namespace UnityStandardAssets._2D
         public float jumpHoldDuration = 0.25f;  // Max duration to hold space and gain velocity.
         public float jumpHoldCounter;           // Control for jumpHoldDuration
 
+        private AudioSource jumpSFX;
+
         private void Awake()
         {
             // Setting up references.
@@ -46,6 +48,8 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             grapple = GameObject.Find("GrappleGun");
+
+            jumpSFX = GetComponent<AudioSource>();
         }
 
         private void Start()
@@ -142,6 +146,7 @@ namespace UnityStandardAssets._2D
                 jumpHoldCounter = jumpHoldDuration;
                 // Juuump!
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce + 250f));
+                jumpSFX.Play();
             }
 
             // If HOLDING jump && in the air:

@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     public Canvas homeCanvas;
     public AudioSource pauseSFX;
     public AudioSource unpauseSFX;
+    public AudioSource bgm;
 
     // Start is called before the first frame update
     void Start()
@@ -42,9 +43,15 @@ public class PauseMenu : MonoBehaviour
         paused = !paused;
 
         if (paused)
+        {
             pauseSFX.Play();
+            bgm.Pause();
+        }
         else
+        {
             unpauseSFX.Play();
+            bgm.Play();
+        }
 
         homeOpen = false;
     }
@@ -61,6 +68,7 @@ public class PauseMenu : MonoBehaviour
         ingameCanvas.enabled = false;
         homeCanvas.enabled = true;
         Time.timeScale = 0;
+        bgm.Pause();
     }
 
     public void CancelQuitToHome() {
@@ -72,6 +80,7 @@ public class PauseMenu : MonoBehaviour
         else {
             paused = false;
             ingameCanvas.enabled = true;
+            bgm.Play();
         }
     }
 

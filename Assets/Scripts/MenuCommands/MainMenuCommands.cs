@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuCommands : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void StartGameWoods(int checkpoint)
     {
         PlayerPrefs.SetInt("level", checkpoint);
@@ -19,6 +13,12 @@ public class MainMenuCommands : MonoBehaviour
 
     public void QuitGame()
     {
+        StartCoroutine(WaitForClose());
+    }
+
+    IEnumerator WaitForClose()
+    {
+        yield return new WaitForSeconds(1f);
         Application.Quit();
     }
 }

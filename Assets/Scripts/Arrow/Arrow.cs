@@ -10,6 +10,7 @@ public class Arrow : MonoBehaviour
 
     private Animator anim;              // Get direction Bobbert is facing and if shielding.
     private bool faceRight;             // Facing right?
+    private AudioSource shotSFX;
 
     public Transform shotPoint;         // The transform that shells appear from on Bobbert.
     public GameObject shot;             // SlingAmmo prefab.
@@ -56,6 +57,7 @@ public class Arrow : MonoBehaviour
         didShoot = false;
         anim = transform.parent.GetComponent<Animator>();
         points = new GameObject[numberOfPoints];
+        shotSFX = GetComponent<AudioSource>();
         
         Debug.Log(player.name);
 
@@ -168,11 +170,13 @@ public class Arrow : MonoBehaviour
             {
                 ArrowBehaviorLeft spawnArrowLeft = Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
                 spawnArrowLeft.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+                shotSFX.Play();
             }
             else
             {
                 ArrowBehaviorRight spawnArrowRight = Instantiate(arrowRight, arrowOffset.position, transform.rotation);
                 spawnArrowRight.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+                shotSFX.Play();
             }
         }
 
