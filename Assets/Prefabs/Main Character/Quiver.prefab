@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5516983900897934285}
   - component: {fileID: 672343307320104336}
   - component: {fileID: 5784624342375231273}
+  - component: {fileID: 4492273832764874720}
   m_Layer: 6
   m_Name: Quiver
   m_TagString: Player
@@ -201,7 +202,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1977281959
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 93c9ab5847724ac479240220881a8518, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -234,6 +235,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4492273832764874720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309702158171023225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a65de7cd73ce042b1207d39cb68524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &582690863954228725
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +431,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1977281959
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -802,7 +815,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1977281959
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0bf17529a628d5349bc7ea94aff0ead5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

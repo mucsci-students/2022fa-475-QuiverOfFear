@@ -11,8 +11,9 @@ public class MainMenuCommands : MonoBehaviour
         
     }
 
-    public void StartGame()
+    public void StartGameWoods(int checkpoint)
     {
+        PlayerPrefs.SetInt("level", checkpoint);
         SceneManager.LoadScene("CaveEntrance");
     }
 
