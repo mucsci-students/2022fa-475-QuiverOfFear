@@ -22,5 +22,8 @@ public class MobHealth : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        else if(collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth health)){
+            health.UpdateHealth(-1);
+        }
     }
 }

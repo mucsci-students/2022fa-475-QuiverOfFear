@@ -9,15 +9,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8652148900259245739}
+  - component: {fileID: 6462905809189192448}
   - component: {fileID: 1442203756324240847}
   - component: {fileID: 7590079486873408057}
+  - component: {fileID: 4492273832764874720}
   - component: {fileID: 455205380665267162}
   - component: {fileID: 4137813600267035651}
   - component: {fileID: 756768984855521456}
   - component: {fileID: 5516983900897934285}
   - component: {fileID: 672343307320104336}
   - component: {fileID: 5784624342375231273}
-  - component: {fileID: 4492273832764874720}
   m_Layer: 6
   m_Name: Quiver
   m_TagString: Player
@@ -45,6 +46,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6462905809189192448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309702158171023225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe9e7dc76f1d044498b9b4572ec0c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  health: 0
+  colorChangeTimer: 0
 --- !u!114 &1442203756324240847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +96,18 @@ MonoBehaviour:
   shootCooldown: 1
   jumpHoldDuration: 0.2
   jumpHoldCounter: 0
+--- !u!114 &4492273832764874720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309702158171023225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a65de7cd73ce042b1207d39cb68524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &455205380665267162
 Rigidbody2D:
   serializedVersion: 4
@@ -235,18 +263,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4492273832764874720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 309702158171023225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93a65de7cd73ce042b1207d39cb68524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &582690863954228725
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,6 +717,7 @@ MonoBehaviour:
   showTrajectory: 0
   shootCooldown: 0.75
   didShoot: 0
+  isPaused: 0
   arrowLeft: {fileID: 4436419748386282005, guid: 9b3ab3c81d4bb4b44aa64934ce2acc2d, type: 3}
   arrowRight: {fileID: 8235137844374129304, guid: 01c9cb11203a84643b50a759d153129a, type: 3}
   arrowOffset: {fileID: 3075248345484531038}
