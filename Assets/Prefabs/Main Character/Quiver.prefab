@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8652148900259245739}
   - component: {fileID: 6462905809189192448}
+  - component: {fileID: 1812668858970496179}
   - component: {fileID: 1442203756324240847}
   - component: {fileID: 7590079486873408057}
   - component: {fileID: 4492273832764874720}
@@ -62,6 +63,19 @@ MonoBehaviour:
   maxHealth: 3
   health: 0
   colorChangeTimer: 0
+  isInvincible: 0
+--- !u!114 &1812668858970496179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309702158171023225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6ab7d0e7ce38445a4a365c46ea68ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1442203756324240847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a65de7cd73ce042b1207d39cb68524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mobs: {fileID: 0}
 --- !u!50 &455205380665267162
 Rigidbody2D:
   serializedVersion: 4

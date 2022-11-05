@@ -20,7 +20,6 @@ public class PlayerHealth : MonoBehaviour
         defaultColor = spriteRenderer.color;
     }
 
-
     // Other enemies call this function
     public void UpdateHealth(int mod)
     {
@@ -45,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
             PlayerDied();
         }
     }
- 
+    
     private void PlayerDied()
     {
         gameObject.SetActive(false);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7397099962215999004}
   - component: {fileID: 8067943165686512141}
   - component: {fileID: 8587055152152974665}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: ArrowPrefab
   m_TagString: Projectile
   m_Icon: {fileID: 0}
