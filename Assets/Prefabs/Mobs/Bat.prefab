@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  maxHealth: 3
   damageEffect: {fileID: 408215840727620610, guid: dc981e94f06bdcc4a8687188697d7ded, type: 3}
 --- !u!82 &1580708114890445653
 AudioSource:

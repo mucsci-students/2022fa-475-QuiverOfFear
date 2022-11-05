@@ -7,10 +7,12 @@ public class MobHealth : MonoBehaviour
     private AudioSource hitSFX;
 
     public int health;
+    public int maxHealth;
     public ParticleSystem damageEffect;
 
     void Start()
     {
+        health = maxHealth;
         hitSFX = GetComponent<AudioSource>();
     }
 
@@ -26,7 +28,7 @@ public class MobHealth : MonoBehaviour
             //Destroy if health is equal to 0
             if(health == 0)
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
         else if(collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth health)){

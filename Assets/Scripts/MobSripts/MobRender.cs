@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MobRender : MonoBehaviour
 {
-    private Vector2 startingPosition;
+    public Vector2 startingPosition;
 
     [SerializeField] GameObject player;
     [SerializeField] float renderDist = 20f;

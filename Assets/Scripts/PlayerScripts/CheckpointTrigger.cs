@@ -9,7 +9,8 @@ public class CheckpointTrigger : MonoBehaviour
 
     private void OnEnable()
     {
-        if (PlayerPrefs.GetInt("check") >= checkpointNo)
+        // Disables this object if they spawn directly into it
+        if (PlayerPrefs.GetInt("level") != 0 && PlayerPrefs.GetInt("check") >= checkpointNo)
             gameObject.SetActive(false);
     }
 
@@ -17,8 +18,17 @@ public class CheckpointTrigger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerPrefs.SetInt("check", checkpointNo);
+            // Player is at the next level
+            PlayerPrefs.SetInt("level", checkpointNo);
+
+            // Check if checkpoint num is lower than greatest checkpoint
+            if (PlayerPrefs.GetInt("check") < checkpointNo)
+                PlayerPrefs.SetInt("check", checkpointNo);
+
+            // Show the checkpoint text
             ui.GetComponent<ImageFade>().ShowCheckpointText();
+
+            // Disable object
             gameObject.SetActive(false);
         }
     }

@@ -13,6 +13,12 @@ public class MusicStartToLoop : MonoBehaviour
         GetComponent<AudioSource> ().loop = true;
         StartCoroutine(playBGM());
     }
+
+    public void SwitchBGM()
+    {
+        StopCoroutine(playBGM());
+        StartCoroutine(playBGM());
+    }
  
     IEnumerator playBGM()
     {
