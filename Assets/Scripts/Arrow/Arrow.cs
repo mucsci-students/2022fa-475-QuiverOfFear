@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class Arrow : MonoBehaviour
 {           
-    // Vector2 direction;                  // Direction of shot.
     GameObject[] points;                // Array of points to display prefab crosshair.
 
-    private Animator anim;              // Get direction Bobbert is facing and if shielding.
+    private Animator anim;              // Get direction Player is facing and if shielding.
     private bool faceRight;             // Facing right?
     private AudioSource shotSFX;
 
-    public Transform shotPoint;         // The transform that shells appear from on Bobbert.
-    public GameObject shot;             // SlingAmmo prefab.
-    public GameObject player;           // Bobbert.
-    public GameObject point;            // Where the shot will land.
+    public Transform shotPoint;         // The transform that arows appear from on the Player.
+    public GameObject arrow;            // Arrow GameObject in player.
+    public GameObject player;           // Player.
+    public GameObject crosshairPrefab;  // Visual of crosshair
 
     public int numberOfPoints;          // Amount of of points to display in the array.
     public float spaceBetweenPoints;    // Distance between points along the trajectory.
@@ -27,58 +26,55 @@ public class Arrow : MonoBehaviour
     private float nextFireTime = 0f;
     public bool didShoot;
     public bool isPaused;
-
-    public ArrowBehaviorLeft arrowLeft;                     // Starting point for arrow when facing left.
-    public ArrowBehaviorRight arrowRight;
-    public Transform arrowOffset;                           // Location arrow spawns from.
+    
     private Vector3 mousePos;                               // Mouse position.
     private Camera mainCam;                                 // Camera position.
     [Header("Arrow Controls:")]
     private float shotPower;                                // Gets multiplied into velocity in Shoot();
-    public float forcePower = 500f;                         // If using ForceShot.
-    public float impulsePower = 20f;                        // If using ImpulseShot.
+    public float forcePower;                                // Force of arrow.
     public float maxForceHoldTime = .5f;                    // Max time to hold left click for max power.
     private float shootStartCounter;
     private float shootReleaseCounter;
     float holdTimeNormalized;
-    public enum ArrowShotType                               // Used in editor
-    {
-        ForceShot,
-        ImpulseShot
-    }
 
-    [SerializeField] public ArrowShotType arrowType = ArrowShotType.ForceShot;
 
-    // Generates the prefab of crosshair shell a bunch of times.
     private void Start() {
-        showTrajectory = true;
+        showTrajectory = false;
         canShootLeft = false;
         canShootRight = false;
         didShoot = false;
-        anim = transform.parent.GetComponent<Animator>();
+        anim = transform.parent.parent.GetComponent<Animator>();
         points = new GameObject[numberOfPoints];
         shotSFX = GetComponent<AudioSource>();
         
         Debug.Log(player.name);
+        ShowTrajectory();
 
-        // for (int i = 0; i < numberOfPoints; i++)
-        // {
-        //     points[i] = Instantiate(point, -500* shotPoint.position, Quaternion.identity);
-        // }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        
         faceRight = anim.GetBool("FacingRight");
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            showTrajectory = !showTrajectory;
+            ShowTrajectory();
+        }
+
+        if(showTrajectory)
+        {
+            for(int i = 0; i < numberOfPoints; i++)
+            {
+                points[i].transform.position = PointPosition(i * spaceBetweenPoints);
+            }
+            
+            if(Input.GetButtonDown("Fire1"))
+            {
+                
+            }
         }
 
         if(Input.GetButtonDown("Fire1"))
@@ -97,28 +93,14 @@ public class Arrow : MonoBehaviour
         else
             {canShootRight = false;}
         
-        // Bobbert facing left and mouse is in a 90 degree arc in front of him.
+        // Player facing left and mouse is in a 90 degree arc in front of him.
         if(!faceRight && mousePos.x < player.transform.position.x)
             {canShootLeft = true;}
         else
             {canShootLeft = false;}
 
-        // Debug.Log("left " + canShootLeft);
-        // Debug.Log("Right " + canShootRight);
-
         if(canShootLeft || canShootRight)
         {
-            // Debug.Log(showTrajectory);
-            // If left click is held down
-            if(showTrajectory)
-            {
-                // Display crosshair
-                // for(int i = 0; i < numberOfPoints; i++)
-                // {
-                //     points[i].transform.position = PointPosition(i * spaceBetweenPoints);
-                // }
-            }
-        
             if(Time.time > nextFireTime)
             {
                 // If left click is released
@@ -130,6 +112,7 @@ public class Arrow : MonoBehaviour
             }
         }
 
+        // transform.rotation = LookAtTarget(mousePos - transform.position);
         // If mouse moves out of shooting position
         // if(Input.GetMouseButtonUp(0))
         // {
@@ -141,55 +124,66 @@ public class Arrow : MonoBehaviour
 
     }
 
+
+
     // Pew pew time.
     public void Shoot() 
     {
-        GameObject pauseMenu = GameObject.Find("PauseMenu");
-        isPaused = pauseMenu.GetComponent<PauseMenu>().paused;
+        // GameObject pauseMenu = GameObject.Find("PauseMenu");
+        // isPaused = pauseMenu.GetComponent<PauseMenu>().paused;
         if(!isPaused)
         {
             holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
-            Debug.Log(holdTimeNormalized);
+            //Debug.Log(holdTimeNormalized);
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
             Vector2 direction = mousePos - transform.position;
             Vector2 rotation = transform.position - mousePos;
-            
-            // If ForceShot is selected.
-            if (arrowType == ArrowShotType.ForceShot)
-            {
-                shotPower = holdTimeNormalized * forcePower;
-            }
-            else
-            {
-                shotPower = holdTimeNormalized * impulsePower;
-                
-            }
+
+            shotPower = holdTimeNormalized * forcePower;
+
             if(!faceRight)
             {
-                ArrowBehaviorLeft spawnArrowLeft = Instantiate(arrowLeft, arrowOffset.position, transform.rotation);
-                spawnArrowLeft.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+                Debug.Log("hohe");
+                GameObject newArrow = Instantiate(arrow, shotPoint.position, transform.rotation);
+                newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
+
                 shotSFX.Play();
             }
             else
             {
-                ArrowBehaviorRight spawnArrowRight = Instantiate(arrowRight, arrowOffset.position, transform.rotation);
-                spawnArrowRight.GetComponent<Rigidbody2D>().AddForce(new Vector2 (direction.x, direction.y).normalized * shotPower, ForceMode2D.Force);
+                GameObject newArrow = Instantiate(arrow, shotPoint.position, transform.rotation);
+                newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
                 shotSFX.Play();
             }
         }
 
     }
+            
+    // public Quaternion LookAtTarget(Vector2 r)
+    //     {
+    //         return Quaternion.Euler(0,0, Mathf.Atan2(r.y, r.x) * Mathf.Rad2Deg);
+    //     }
+
+    void ShowTrajectory()
+    {
+        // showTrajectory = !showTrajectory;
+        //  for (int i = 0; i < numberOfPoints; i++)
+        //  {
+        //      points[i] = Instantiate(crosshairPrefab, -500* shotPoint.position, Quaternion.identity);
+        //  }
+    }
 
     // Where to place the points showing the trajectory.
-    // Vector2 PointPosition(float t)
-    // {
-        // Vector2 direction = mousePos - transform.position;
-        // Vector2 position = (Vector2)arrowOffset.position + (direction.normalized * shotPower * t) + 0.5f * Physics2D.gravity * (t * t);
-        // // Vector2 position = (Vector2)shotPoint.position + (direction.normalized * launchForce * t) + 0.5f * Physics2D.gravity * (t * t);
-        // return position;
-    // }
+    Vector2 PointPosition(float t)
+    {
+        Vector2 direction = mousePos - transform.position;
+        Vector2 position = (Vector2)shotPoint.position + (direction.normalized * shotPower * t) + 0.5f * Physics2D.gravity * (t * t);
+        // Vector2 position = (Vector2)shotPoint.position + (direction.normalized * launchForce * t) + 0.5f * Physics2D.gravity * (t * t);
+        return position;
+    }
+
 
     // Hides the shell after every shot.
     Vector2 HideTrajectory(float t)

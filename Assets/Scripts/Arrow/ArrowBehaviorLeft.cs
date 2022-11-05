@@ -4,43 +4,41 @@ using UnityEngine;
 
 public class ArrowBehaviorLeft : MonoBehaviour
 {
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
     private Animator m_Anim;
     public float force;
     private float arrowDeleteTimer = 0.1f;
-    private Vector3 mousePos;
-    private Camera mainCam;
-    private Vector3 movePos;
     private SpriteRenderer sp;
-
+    public Ray2D ray;
+    private GameObject arrow;
+    public Vector2 direction;
+    public Vector2 rotation;
     
-    void Awake()
-    {
-        m_Anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        sp = GetComponent<SpriteRenderer>();    
-    }
-
     void Start()
     {
-        Debug.Log("spawn");
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePos - transform.position;
-        transform.localScale *= -1;
-        // sp.flipY = !sp.flipY;
+        //startRotation = new Vector2 (direction.x, direction.y).normalized;
+        //transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(startRotation.y, startRotation.x) * Mathf.Rad2Deg);
+        // transform.localScale *= -1;
+        // sp.flipX = !sp.flipX;
+        // Ray2D ray = new Ray2D (this.transform.position, this.transform.position + this.transform.right) ;
+        m_Anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
     }
 
-    void Update()
+
+    void Update() 
     {
-        transform.rotation = LookAtTarget(mousePos - transform.position);
-        // transform.position = movePosition;
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) *Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {       
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {       
         m_Anim.SetTrigger("Hit");
-        rb.gravityScale = 10f;
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+
         Debug.Log(collision.collider.gameObject.name);
 
         if (collision.gameObject.tag != "enemy")
@@ -52,11 +50,5 @@ public class ArrowBehaviorLeft : MonoBehaviour
         // {
         //     Health.TakeDamage(1);
         // }
-    }
-
-    public static Quaternion LookAtTarget(Vector2 r)
-    {
-
-        return Quaternion.Euler(0, 0, Mathf.Atan2(r.y, r.x) * Mathf.Rad2Deg);
     }
 }

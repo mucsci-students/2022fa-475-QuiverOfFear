@@ -11,10 +11,12 @@ public class ArrowBehaviorRight : MonoBehaviour
     private Vector3 mousePos;
     private Camera mainCam;
     private Vector3 movePos;
+    private SpriteRenderer sp;
 
     void Awake()
     {
         m_Anim = GetComponent<Animator>();
+        sp = GetComponent<SpriteRenderer>();  
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -23,18 +25,22 @@ public class ArrowBehaviorRight : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
         Vector3 direction = mousePos - transform.position;
+        sp.flipY = !sp.flipY;
+
     }
 
+
     void Update(){
-        transform.rotation = LookAtTarget(mousePos - transform.position);
+
+        // transform.rotation = LookAtTarget(mousePos - transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        m_Anim.SetTrigger("Hit");
+        // m_Anim.SetTrigger("Hit");
         rb.gravityScale = 10f;
         if (collision.gameObject.tag != "enemy")
         {
-            Destroy(gameObject, arrowDeleteTimer);
+            // Destroy(gameObject, arrowDeleteTimer);
         }
     }
         public static Quaternion LookAtTarget(Vector2 r)
