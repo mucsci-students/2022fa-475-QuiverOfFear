@@ -5,11 +5,7 @@ using UnityEngine.Events;
 
 public class Invincible : MonoBehaviour
 {
-    public float invincibilityTime = 2f;
     private Rigidbody2D m_rb;
-    private GameObject feet;
-    private float tempMass;
-    private Transform center;
 
     [SerializeField] 
     private float knockbackStrength;
@@ -17,7 +13,6 @@ public class Invincible : MonoBehaviour
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        //center = GetComponent<Transform>();
     }
     
     void OnCollisionEnter2D(Collision2D collision) {
@@ -25,40 +20,51 @@ public class Invincible : MonoBehaviour
         //Debug.Log(center.name);
         if(collision.gameObject.tag == "Enemies") 
         {
-            // Knock back player & enemy
-            Vector2 playerDirection = (transform.position - collision.transform.position);
-            Vector2 playerKnockback = playerDirection * knockbackStrength*0.9f;
+            Vector3 playerDirection;
+            Vector3 playerKnockDistance;
+            Vector3 playerKnockback;
+            Vector3 enemyDirection;
+            Vector3 enemyKnockDistance;
+            Vector3 enemyKnockback;
 
+            if(transform.position.x < collision.transform.position.x)
+            {
+                playerKnockDistance = new Vector3(-5.0f, 5.0f,0f);
+                enemyKnockDistance = new Vector3(5.0f, 5.0f,0f);
+            }
+            else
+            {
+                playerKnockDistance = new Vector3(5.0f, 5.0f,0f);
+                enemyKnockDistance = new Vector3(-5.0f, 5.0f,0f);
+            }
+            // Knock back player & enemy
+            playerDirection = (playerKnockDistance - transform.position);
+            playerKnockback = playerDirection * knockbackStrength;
+
+            PlayerKnockBack(playerKnockback, knockbackStrength);
             print("Player " + transform.position);
             print("Enemy " + collision.transform.position);
                 
-            // print(playerDirection);
-            Vector2 enemyDirection = (collision.transform.position - transform.position).normalized;
-            Vector2 enemyKnockback = enemyDirection * knockbackStrength;
-            m_rb.gravityScale = 1;
-            m_rb.mass = .5f;
-            StartCoroutine(PlayerKnockBack(playerKnockback));
-            StartCoroutine(KnockBack(playerKnockback, enemyKnockback));
+            print(playerDirection);
+            enemyDirection = (playerKnockDistance - collision.transform.position);
+            enemyKnockback = enemyDirection * knockbackStrength;
+            EnemyKnockBack(enemyKnockback, knockbackStrength);
                 
         }
 
-         IEnumerator PlayerKnockBack(Vector2 playerKnockback)
+        void PlayerKnockBack(Vector2 playerKnockback, float knockbackStrength)
         {
-            Vector2 var = new Vector2 (.1f,.1f);
-            playerKnockback = playerKnockback * var;
-            m_rb.velocity = playerKnockback * 6f;
-            yield return new WaitForSeconds(.09f);
+            m_rb.velocity = new Vector2 (playerKnockback.x, playerKnockback.y).normalized * knockbackStrength;
+        //    yield return new WaitForSeconds(.09f);
             m_rb.velocity = Vector3.zero;
-            m_rb.mass = 1f;
-            m_rb.gravityScale = 3;
 
         }
         
-        IEnumerator KnockBack(Vector2 playerKnockback, Vector2 enemyKnockback)
+        void EnemyKnockBack(Vector2 enemyKnockback, float knockbackStrength)
         {
             // m_rb.velocity = playerKnockback;
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(enemyKnockback, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(1f);
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2 (enemyKnockback.x, enemyKnockback.y).normalized * knockbackStrength;
+            // yield return new WaitForSeconds(1f);
             // m_rb.velocity = Vector3.zero;
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 

@@ -469,7 +469,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1812668858970496179, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812668858970496179, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
+      propertyPath: knockbackStrength
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3075248345484531038, guid: 06780fa95fed8fe4287234ea21565cc9, type: 3}
       propertyPath: m_LocalPosition.x
