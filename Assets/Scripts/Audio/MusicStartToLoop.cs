@@ -5,12 +5,34 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class MusicStartToLoop : MonoBehaviour
 {
-    public AudioClip startClip;
-    public AudioClip loopClip;
+    public AudioClip startClip, loopClip;
+    public AudioClip level1StartClip;
+    public AudioClip level1LoopClip;
+    public AudioClip level2StartClip;
+    public AudioClip level2LoopClip;
+    public AudioClip level3StartClip;
+    public AudioClip level3LoopClip;
 
     void OnEnable()
     {
         GetComponent<AudioSource> ().loop = true;
+
+        switch (PlayerPrefs.GetInt("level"))
+        {
+            case 0:
+                startClip = level1StartClip;
+                loopClip = level1LoopClip;
+                break;
+            case 1:
+                startClip = level2StartClip;
+                loopClip = level2LoopClip;
+                break;
+            case 2:
+                startClip = level3StartClip;
+                loopClip = level3LoopClip;
+                break;
+        }
+
         StartCoroutine(playBGM());
     }
 
@@ -22,6 +44,7 @@ public class MusicStartToLoop : MonoBehaviour
  
     IEnumerator playBGM()
     {
+
         GetComponent<AudioSource>().clip = startClip;
         GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(GetComponent<AudioSource>().clip.length);

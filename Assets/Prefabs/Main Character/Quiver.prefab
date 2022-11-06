@@ -61,10 +61,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
-  health: 0
-  colorChangeTimer: 3
-  invincibilityDeltaTime: 0.15
-  invincibilityDurationSeconds: 1.5
+  health: 3
+  colorChangeTimer: 0
+  invincibilityDeltaTime: 0.2
+  invincibilityDurationSeconds: 1
+--- !u!114 &1812668858970496179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309702158171023225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a6ab7d0e7ce38445a4a365c46ea68ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibilityTime: 2
+  knockbackStrength: 25
 --- !u!114 &1442203756324240847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a65de7cd73ce042b1207d39cb68524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gun: {fileID: 0}
   mobs: {fileID: 0}
 --- !u!50 &455205380665267162
 Rigidbody2D:

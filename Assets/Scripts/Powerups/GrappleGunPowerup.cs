@@ -6,8 +6,6 @@ public class GrappleGunPowerup : MonoBehaviour
 {
     private Camera cam;
     public GameObject playerGrappleGun;
-    public AudioClip startClip;
-    public AudioClip loopClip;
 
     private void Start()
     {
@@ -19,15 +17,21 @@ public class GrappleGunPowerup : MonoBehaviour
         print("got gun!");
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerGrappleGun.GetComponent<GrappleGun>().enabled = true;
-            playerGrappleGun.GetComponent<SpriteRenderer>().enabled = true;
-            playerGrappleGun.transform.GetChild(0).gameObject.SetActive(true);
+            EnableGun();
+            var camAudio = cam.gameObject.GetComponent<MusicStartToLoop>();
 
             // Next music track
-            cam.gameObject.GetComponent<MusicStartToLoop>().startClip = startClip;
-            cam.gameObject.GetComponent<MusicStartToLoop>().loopClip = loopClip;
-            cam.gameObject.GetComponent<MusicStartToLoop>().SwitchBGM();
-            Destroy(gameObject);
+            camAudio.startClip = camAudio.level3StartClip;
+            camAudio.loopClip = camAudio.level3LoopClip;
+            camAudio.SwitchBGM();
         }
+    }
+
+    public void EnableGun()
+    {
+        playerGrappleGun.GetComponent<GrappleGun>().enabled = true;
+        playerGrappleGun.GetComponent<SpriteRenderer>().enabled = true;
+        playerGrappleGun.transform.GetChild(0).gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
