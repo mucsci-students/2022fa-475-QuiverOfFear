@@ -61,7 +61,6 @@ public class PlayerHealth : MonoBehaviour
                 StartCoroutine(BecomeTemporarilyInvincible());
             }
         }
-        
         if(health + mod > health) {
         
             health +=mod;

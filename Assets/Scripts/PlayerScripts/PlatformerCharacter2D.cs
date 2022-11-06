@@ -12,9 +12,11 @@ namespace UnityStandardAssets._2D
         [SerializeField] private LayerMask m_WhatIsGround;      // A mask determining what is ground to the character.
 
         private Animator m_Anim;                                // Reference to the player's animator.
+        private Animator g_Anim;                                // Reference to center's animator.
         private Rigidbody2D m_Rigidbody2D;                      // Reference to the player's Rigidbody.
         private Transform m_GroundCheck;                        // A position marking where to check if the player is grounded.
         private Transform m_CeilingCheck;                       // A position marking where to check for ceilings.
+        private Transform m_Center; 
         private GameObject grapple;                             // Reference to grapple gameObject.
 
         const float k_GroundedRadius = .2f;                     // Radius of the overlap circle to determine if grounded.
@@ -44,6 +46,7 @@ namespace UnityStandardAssets._2D
         {
             // Setting up references.
             m_GroundCheck = transform.Find("GroundCheck");
+            m_Center = transform.Find("Center");
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -54,6 +57,7 @@ namespace UnityStandardAssets._2D
 
         private void Start()
         {
+            g_Anim = m_Center.GetComponent<Animator>();
             didShoot = false;
         }
 
@@ -61,6 +65,7 @@ namespace UnityStandardAssets._2D
         private void FixedUpdate()
         {
             m_Grounded = false;
+            g_Anim.SetBool("Landed", false);
             isAttacking = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -69,10 +74,12 @@ namespace UnityStandardAssets._2D
             {
                 if (colliders[i].gameObject != gameObject)
                     m_Grounded = true;
+                    g_Anim.SetBool("Landed", true);
             }
             
             // Set Ground for animation
             m_Anim.SetBool("Ground", m_Grounded);
+            g_Anim.SetBool("Jumping", false);
             m_Anim.SetBool("canAttack", false);
 
             // Set the vertical animation
@@ -116,13 +123,19 @@ namespace UnityStandardAssets._2D
 
                 //If moving right and facing left:
                 if (move > 0 && !m_FacingRight)
-                {   
+                {   g_Anim.SetBool("TurnRight",true);
                     Flip();
                 }
                 // If moving left and facing right:
                 else if (move < 0 && m_FacingRight)
                 {
+                    g_Anim.SetBool("TurnLeft", true);
                     Flip();
+                }
+                else
+                {
+                    g_Anim.SetBool("TurnRight",false);
+                    g_Anim.SetBool("TurnLeft",false);
                 }
 
             }
@@ -139,8 +152,11 @@ namespace UnityStandardAssets._2D
                 m_Grounded = false;
                 isJumping = true;
 
+                g_Anim.SetBool("Jumping", true);
+
                 // Set state for animator
                 m_Anim.SetBool("Ground", false);
+                g_Anim.SetBool("Landed", false);
 
                 // Initialize jump interval
                 jumpHoldCounter = jumpHoldDuration;
@@ -170,6 +186,7 @@ namespace UnityStandardAssets._2D
                 isJumping = false; 
                 jumpHoldCounter = 0;
             }
+            
         }
 
         // Flip player depending on the way they are / should be facing.
@@ -186,7 +203,7 @@ namespace UnityStandardAssets._2D
 
             // Flip grappling hook sprite when player turns.
             grappleSprite.flipY = !grappleSprite.flipY;
-            grappleSprite.transform.parent.localScale = theScale;  
+            grappleSprite.transform.parent.localScale = theScale;
         }
     }
 }
