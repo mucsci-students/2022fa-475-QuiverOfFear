@@ -145,7 +145,6 @@ public class Arrow : MonoBehaviour
 
             if(!faceRight)
             {
-                Debug.Log("hohe");
                 GameObject newArrow = Instantiate(arrow, shotPoint.position, transform.rotation);
                 newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
 
