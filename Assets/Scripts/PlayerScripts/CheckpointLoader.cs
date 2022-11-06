@@ -33,6 +33,10 @@ public class CheckpointLoader : MonoBehaviour
                 transform.position = new Vector2(-12f, 12f);
                 gun.GetComponent<GrappleGunPowerup>().EnableGun();
                 break;
+            // Back to the checkpoint 3
+            case 3:
+                transform.position = new Vector2(0f, 0f);
+                break;
             // Back to the beginning
             default:
                 transform.position = new Vector2(-5f, 0f);

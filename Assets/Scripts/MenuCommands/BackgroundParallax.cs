@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class BackgroundParallax : MonoBehaviour
 {
     private float length, startPos;
-    public GameObject cam;
+    private GameObject cam;
     public float parallaxSpeed;
 
     void OnEnable()
     {
+        cam = Camera.main.gameObject;
         Time.timeScale = 1;
         startPos = transform.position.x;
         length = GetComponent<SpriteRenderer>().bounds.size.x;

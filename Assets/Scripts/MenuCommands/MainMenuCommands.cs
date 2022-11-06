@@ -11,6 +11,12 @@ public class MainMenuCommands : MonoBehaviour
         SceneManager.LoadScene("CaveEntrance");
     }
 
+    public void StartGameCaves(int checkpoint)
+    {
+        PlayerPrefs.SetInt("level", checkpoint);
+        SceneManager.LoadScene("Cave");
+    }
+
     public void QuitGame()
     {
         StartCoroutine(WaitForClose());

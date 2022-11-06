@@ -19,10 +19,6 @@ public class MusicStartToLoop : MonoBehaviour
 
         switch (PlayerPrefs.GetInt("level"))
         {
-            case 0:
-                startClip = level1StartClip;
-                loopClip = level1LoopClip;
-                break;
             case 1:
                 startClip = level2StartClip;
                 loopClip = level2LoopClip;
@@ -30,6 +26,10 @@ public class MusicStartToLoop : MonoBehaviour
             case 2:
                 startClip = level3StartClip;
                 loopClip = level3LoopClip;
+                break;
+            default:
+                startClip = level1StartClip;
+                loopClip = level1LoopClip;
                 break;
         }
 
