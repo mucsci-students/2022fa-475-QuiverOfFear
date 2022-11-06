@@ -215,9 +215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240593192bb9fc04eb2520b3b555e693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
-  maxHealth: 5
+  health: 3
+  maxHealth: 3
   damageEffect: {fileID: 408215840727620610, guid: dc981e94f06bdcc4a8687188697d7ded, type: 3}
+  invincibilityDeltaTime: 0.2
+  invincibilityDurationSeconds: 0.5
 --- !u!114 &3773052386492378450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff09942348971af4280c17dd0addd183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingPosition: {x: 0, y: 0}
   player: {fileID: 0}
   renderDist: 20
 --- !u!82 &8935631731682518491

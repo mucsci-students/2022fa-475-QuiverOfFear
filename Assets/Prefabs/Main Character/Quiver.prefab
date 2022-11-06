@@ -61,11 +61,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe9e7dc76f1d044498b9b4572ec0c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 50
+  maxHealth: 3
+  health: 3
   colorChangeTimer: 0
-  invincibilityDeltaTime: 0
-  invincibilityDurationSeconds: 0
+  invincibilityDeltaTime: 0.2
+  invincibilityDurationSeconds: 1
 --- !u!114 &1812668858970496179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a65de7cd73ce042b1207d39cb68524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gun: {fileID: 0}
   mobs: {fileID: 0}
 --- !u!50 &455205380665267162
 Rigidbody2D:
