@@ -4272,7 +4272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca8d0c2da1aaf24db99f63708ca376f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkNo: 4
+  checkNo: 5
 --- !u!82 &1313644884
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4432,7 +4432,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4954,7 +4954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca8d0c2da1aaf24db99f63708ca376f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkNo: 5
+  checkNo: 6
 --- !u!82 &1724696994
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5114,7 +5114,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 6
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5982,7 +5982,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6037,7 +6037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca8d0c2da1aaf24db99f63708ca376f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkNo: 3
+  checkNo: 4
 --- !u!1 &2094431208
 GameObject:
   m_ObjectHideFlags: 0
@@ -6189,6 +6189,10 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1394046294}
+    - target: {fileID: 7684825488060452243, guid: 6b5036b8a1c5d8e499b25c35a5059dda, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8797254202361715370, guid: 6b5036b8a1c5d8e499b25c35a5059dda, type: 3}
       propertyPath: cam
       value: 

@@ -17,6 +17,11 @@ public class BackgroundParallax : MonoBehaviour
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
+    void OnDisable()
+    {
+        transform.position = new Vector3(startPos, 0f, 0f);
+    }
+
     void FixedUpdate()
     {
         transform.position = new Vector3(transform.position.x + (parallaxSpeed * Time.deltaTime), transform.position.y, transform.position.z);

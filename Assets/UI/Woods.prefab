@@ -97,7 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c48205b08f60314986cfacf490a37dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   parallaxSpeed: 0.6
 --- !u!1 &4402850960408289352
 GameObject:
@@ -196,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c48205b08f60314986cfacf490a37dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   parallaxSpeed: 1
 --- !u!1 &4402850961102177753
 GameObject:
@@ -295,7 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c48205b08f60314986cfacf490a37dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   parallaxSpeed: 2
 --- !u!1 &4402850961758335483
 GameObject:
@@ -394,7 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c48205b08f60314986cfacf490a37dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   parallaxSpeed: 2
 --- !u!1 &4402850961842845170
 GameObject:
@@ -531,7 +527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c48205b08f60314986cfacf490a37dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   parallaxSpeed: 1
 --- !u!1 &4517078118007271016
 GameObject:
@@ -630,7 +625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c48205b08f60314986cfacf490a37dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   parallaxSpeed: 0.6
 --- !u!1 &7631608297477756306
 GameObject:
@@ -704,7 +698,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 43beea5c16fa6144dbd99ca49d6855cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
