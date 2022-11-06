@@ -31,6 +31,12 @@ public class PlayerHealth : MonoBehaviour
         m_rb = GetComponent<Rigidbody2D>();
         respawn = GetComponent<CheckpointLoader>();
         m_anim = GetComponent<Animator>();
+
+        // Makes sure player health is never under the max health
+        if (PlayerPrefs.GetInt("health") < maxHealth)
+            PlayerPrefs.SetInt("health", maxHealth);
+
+        maxHealth = PlayerPrefs.GetInt("health");
     }
 
     // Other enemies call this function for damage.

@@ -4,34 +4,29 @@ using UnityEngine;
 
 public class HealthUp : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] int world;
+    [SerializeField] int powerNo;
 
-    public void increaseHealth(float healthIncrease)
+    private void OnEnable()
     {
-        Debug.Log("Max health before: " + maxHealth);
-        maxHealth += healthIncrease;
-        Debug.Log("Max health after: " + maxHealth);
+        if (PlayerPrefs.GetInt("powerup" + world + powerNo) == 1)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // If player picks up a health powerup, add a new permanent health point.
-        if(collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth maxHealth))
+        GameObject obj = collision.gameObject;
+        if (obj.CompareTag("Player"))
         {
-            print("Quiver gained a healthpoint!");
-            increaseHealth();
-            Destroy (gameObject);
+            PlayerHealth healthStats = obj.GetComponent<PlayerHealth>();
+            ++healthStats.maxHealth;
+            healthStats.health = healthStats.maxHealth;
+            PlayerPrefs.SetInt("health", healthStats.maxHealth);
+            PlayerPrefs.SetInt("powerup" + world + powerNo, 1);
+            gameObject.SetActive(false);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
 

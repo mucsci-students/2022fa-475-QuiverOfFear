@@ -6189,10 +6189,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1394046294}
-    - target: {fileID: 7684825488060452243, guid: 6b5036b8a1c5d8e499b25c35a5059dda, type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8797254202361715370, guid: 6b5036b8a1c5d8e499b25c35a5059dda, type: 3}
       propertyPath: cam
       value: 
