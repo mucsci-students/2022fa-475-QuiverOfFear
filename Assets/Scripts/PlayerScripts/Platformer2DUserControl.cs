@@ -9,11 +9,7 @@ namespace UnityStandardAssets._2D
         private Animator m_anim;
         private bool m_Jump_button;
         private bool m_Jump_down;
-        private bool isDead;
-        private float shootStartCounter;
-        private float shootReleaseCounter;        
-        private bool fire;
-        
+        private bool isDead; 
 
         private void Awake()
         {
@@ -31,17 +27,6 @@ namespace UnityStandardAssets._2D
                 // m_Jump_button DURATION jump is pressed
                 m_Jump_button = Input.GetButton("Jump");
             }
-
-            if(Input.GetButtonDown("Fire1"))
-            {
-                shootStartCounter = Time.time;
-            }
-
-            if(Input.GetButtonUp("Fire1"))
-            {
-                shootReleaseCounter = Time.time - shootStartCounter;
-                fire = true;
-            }  
         }
 
         private void FixedUpdate()
@@ -53,12 +38,12 @@ namespace UnityStandardAssets._2D
             float move = Input.GetAxis("Horizontal");
                      
             // Pass all parameters to the character control script.
-            if(!isDead){
-                m_Character.Move(move, fire, m_Jump_down, m_Jump_button, sneak, shootReleaseCounter);
+            if(!isDead)
+            {
+                m_Character.Move(move, m_Jump_down, m_Jump_button, sneak);
             }
 
             // Reset
-            fire = false;
             m_Jump_down = false;
             m_Jump_button = false;
             sneak = false;

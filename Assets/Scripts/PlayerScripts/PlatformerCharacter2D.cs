@@ -22,19 +22,10 @@ namespace UnityStandardAssets._2D
         const float k_GroundedRadius = .2f;                     // Radius of the overlap circle to determine if grounded.
         const float k_CeilingRadius = .01f;                     // Radius of the overlap circle to determine if the player can stand up.
         const float m_SneakSpeed = 0f;                          // Movement speed when sneaking.
-        private bool m_Grounded;                                // Whether or not the player is grounded.
         public bool m_FacingRight = true;                       // For determining which way the player is currently facing.
         private bool isJumping;                                 // Whether or not the player is in the air with jumpHoldDuration.
-        // private bool showTrajectory;
-        
-        // public int numberOfPoints;                              // Amount of of points to display in the array.
-        // public float spaceBetweenPoints;                        // Distance between points along the trajectory.
-        public bool didShoot;                                   // I have no clue what I am doing with all these different attacking bools.
-        private bool isAttacking;                               // I'm too scared to delete.
-        // private bool canShootRight;                             /*     These I need. Controls whether or not mouse position is in a valid   */
-        // private bool canShootLeft;                              /*                  direction to shoot for each side.                       */
-        public float shootCooldown = 1.0f;                      // Max cooldown in between shots.
-        private float nextFireTime = 0f;                        // Assists in counting time between shots.
+        private bool isCharging;                                // Set Charging animation in animator.
+        private bool m_Grounded;                                // Whether or not the player is grounded.
         
         [Header("Jump Controls:")]
         public float jumpHoldDuration = 0.25f;  // Max duration to hold space and gain velocity.
@@ -51,14 +42,12 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             grapple = GameObject.Find("GrappleGun");
-
             jumpSFX = GetComponent<AudioSource>();
         }
 
         private void Start()
         {
             g_Anim = m_Center.GetComponent<Animator>();
-            didShoot = false;
         }
 
         
@@ -66,7 +55,7 @@ namespace UnityStandardAssets._2D
         {
             m_Grounded = false;
             g_Anim.SetBool("Landed", false);
-            isAttacking = false;
+            isCharging = m_Anim.GetBool("isCharging");
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -85,27 +74,16 @@ namespace UnityStandardAssets._2D
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
             m_Anim.SetBool("FacingRight", m_FacingRight);
-            m_Anim.SetBool("Attacking", isAttacking);
+            m_Anim.SetBool("isCharging", isCharging);
 
         }
 
-        public void Move(float move, bool fire, bool jump, bool jump_2, bool sneak, float shotForce)
+        public void Move(float move, bool jump, bool jump_2, bool sneak)
         {
  
             // Setting variables in the animator.
-            m_Anim.SetBool("Attacking", fire);
             m_Anim.SetFloat("yPos", m_Rigidbody2D.position.y);
             m_Anim.SetBool("Sneak", sneak);
-
-            if(Time.time > nextFireTime)
-            {
-                m_Anim.SetBool("canAttack", true);         
-                if(fire)
-                {
-                    // Shoot(shotForce);
-                    nextFireTime = Time.time + shootCooldown;
-                }
-            }
 
             // Only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
@@ -116,10 +94,12 @@ namespace UnityStandardAssets._2D
                 // }
                 
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
-                m_Anim.SetFloat("Speed", Mathf.Abs(move));
+                if(!isCharging || (isCharging && !m_Grounded) ){
+                    m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
-                // Move the character
-                m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+                    // Move the character
+                    m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+                }
 
                 //If moving right and facing left:
                 if (move > 0 && !m_FacingRight)

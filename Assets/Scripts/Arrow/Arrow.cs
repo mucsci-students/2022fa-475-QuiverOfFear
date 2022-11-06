@@ -20,6 +20,7 @@ public class Arrow : MonoBehaviour
     public float spaceBetweenPoints;    // Distance between points along the trajectory.
     public bool showTrajectory;         // Boolean to control the display of the crosshair.
 
+    private bool canAttack;
     private bool isDead;
     private bool isCharging;
     private bool canShootRight;         // Allowed to shoot right.
@@ -28,7 +29,9 @@ public class Arrow : MonoBehaviour
     private float nextFireTime = 0f;
     public bool didShoot;
     public bool isPaused;
-    
+
+
+    private bool validShot;
     private Vector3 mousePos;                               // Mouse position.
     private Camera mainCam;                                 // Camera position.
     [Header("Arrow Controls:")]
@@ -51,12 +54,14 @@ public class Arrow : MonoBehaviour
         
         Debug.Log(player.name);
         ShowTrajectory();
+        // validShot = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        canAttack = anim.GetBool("canAttack");
         isDead = anim.GetBool("isDead");
         isCharging = anim.GetBool("isCharging");
 
@@ -75,30 +80,25 @@ public class Arrow : MonoBehaviour
             {
                 points[i].transform.position = PointPosition(i * spaceBetweenPoints);
             }
-            
-            if(Input.GetButtonDown("Fire1"))
-            {
-                
-            }
         }
 
-        if(Time.time > nextFireTime){
-            print("Time.time > nextFireTime");
-
+        if(Time.time > nextFireTime)
+        {
             anim.SetBool("canAttack", true);
-            if(Input.GetButtonDown("Fire1"))
-            {
-                print("is charging: " + isCharging);
-                anim.SetBool("isCharging", true);
-                shootStartCounter = Time.time;
-            }
+        }
+        else{
+            anim.SetBool("canAttack", false);
+        }
 
-            if(Input.GetButtonUp("Fire1"))
-            {
-                shootReleaseCounter = Time.time - shootStartCounter;
-                anim.SetBool("isCharging", false);
-                print("is charging: " + isCharging);
-            }
+        if(canAttack && Input.GetMouseButtonDown(0)) {
+            validShot = true;
+            anim.SetBool("isCharging", true);
+            shootStartCounter = Time.time;
+        }
+
+        if(Input.GetMouseButtonUp(0) && validShot) {
+            shootReleaseCounter = Time.time - shootStartCounter;
+            anim.SetBool("isCharging", false);
         }
   
         // Character facing right && mouse is in a 90 degree arc in front of him.
@@ -118,10 +118,11 @@ public class Arrow : MonoBehaviour
             if(Time.time > nextFireTime)
             {
                 // If left click is released
-                if(Input.GetMouseButtonUp(0))
+                if(Input.GetMouseButtonUp(0) && validShot)
                 {
                     Shoot();
                     nextFireTime = Time.time + shootCooldown;
+                    validShot = false;
                 }
             }
         }
