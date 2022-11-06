@@ -55,7 +55,6 @@ public class Arrow : MonoBehaviour
         Debug.Log(player.name);
         ShowTrajectory();
         // validShot = false;
-
     }
 
     // Update is called once per frame
