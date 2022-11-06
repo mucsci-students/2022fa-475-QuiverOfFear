@@ -39,7 +39,7 @@ public class ArrowBehaviorLeft : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
 
-        Debug.Log(collision.collider.gameObject.name);
+        // Debug.Log(collision.collider.gameObject.name);
 
         if (collision.gameObject.tag != "enemy")
         {

@@ -20,6 +20,8 @@ public class Arrow : MonoBehaviour
     public float spaceBetweenPoints;    // Distance between points along the trajectory.
     public bool showTrajectory;         // Boolean to control the display of the crosshair.
 
+    private bool isDead;
+    private bool isCharging;
     private bool canShootRight;         // Allowed to shoot right.
     private bool canShootLeft;          // Allowed to shoot left.
     public float shootCooldown = 0.5f;
@@ -55,6 +57,9 @@ public class Arrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isDead = anim.GetBool("isDead");
+        isCharging = anim.GetBool("isCharging");
+
         faceRight = anim.GetBool("FacingRight");
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -77,14 +82,23 @@ public class Arrow : MonoBehaviour
             }
         }
 
-        if(Input.GetButtonDown("Fire1"))
-        {
-            shootStartCounter = Time.time;
-        }
+        if(Time.time > nextFireTime){
+            print("Time.time > nextFireTime");
 
-        if(Input.GetButtonUp("Fire1"))
-        {
-            shootReleaseCounter = Time.time - shootStartCounter;
+            anim.SetBool("canAttack", true);
+            if(Input.GetButtonDown("Fire1"))
+            {
+                print("is charging: " + isCharging);
+                anim.SetBool("isCharging", true);
+                shootStartCounter = Time.time;
+            }
+
+            if(Input.GetButtonUp("Fire1"))
+            {
+                shootReleaseCounter = Time.time - shootStartCounter;
+                anim.SetBool("isCharging", false);
+                print("is charging: " + isCharging);
+            }
         }
   
         // Character facing right && mouse is in a 90 degree arc in front of him.
@@ -131,13 +145,12 @@ public class Arrow : MonoBehaviour
     {
         // GameObject pauseMenu = GameObject.Find("PauseMenu");
         // isPaused = pauseMenu.GetComponent<PauseMenu>().paused;
-        if(!isPaused)
+        if(!isPaused && !isDead)
         {
             holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
             //Debug.Log(holdTimeNormalized);
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            print(mousePos);
 
             Vector2 direction = mousePos - transform.position;
             Vector2 rotation = transform.position - mousePos;
