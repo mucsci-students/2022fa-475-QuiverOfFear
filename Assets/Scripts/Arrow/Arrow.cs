@@ -137,6 +137,7 @@ public class Arrow : MonoBehaviour
             //Debug.Log(holdTimeNormalized);
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            print(mousePos);
 
             Vector2 direction = mousePos - transform.position;
             Vector2 rotation = transform.position - mousePos;

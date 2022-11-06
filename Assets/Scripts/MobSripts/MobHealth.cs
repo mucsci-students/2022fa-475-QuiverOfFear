@@ -42,6 +42,7 @@ public class MobHealth : MonoBehaviour
         }
         else if(collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth health))
         {
+            print("Enemy hit player");
             health.UpdateHealth(-1);
         }
     }

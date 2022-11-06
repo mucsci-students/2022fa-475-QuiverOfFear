@@ -6,8 +6,10 @@ namespace UnityStandardAssets._2D
     public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
+        private Animator m_anim;
         private bool m_Jump_button;
         private bool m_Jump_down;
+        private bool isDead;
         private float shootStartCounter;
         private float shootReleaseCounter;        
         private bool fire;
@@ -16,6 +18,7 @@ namespace UnityStandardAssets._2D
         private void Awake()
         {
             m_Character = GetComponent<PlatformerCharacter2D>();
+            m_anim = GetComponent<Animator>();
         }
 
         private void Update()
@@ -43,12 +46,16 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
+            isDead = m_anim.GetBool("isDead");
+            print("dead " + isDead);
             // Read the inputs.
             bool sneak = Input.GetKey(KeyCode.S);
             float move = Input.GetAxis("Horizontal");
                      
             // Pass all parameters to the character control script.
-            m_Character.Move(move, fire, m_Jump_down, m_Jump_button, sneak, shootReleaseCounter);
+            if(!isDead){
+                m_Character.Move(move, fire, m_Jump_down, m_Jump_button, sneak, shootReleaseCounter);
+            }
 
             // Reset
             fire = false;
