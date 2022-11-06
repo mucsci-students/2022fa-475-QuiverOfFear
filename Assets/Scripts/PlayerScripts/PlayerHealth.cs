@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     Color defaultColor;
     bool isHit = false;
     public float colorChangeTimer;
+    private Rigidbody2D m_rb;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +19,13 @@ public class PlayerHealth : MonoBehaviour
         health = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         defaultColor = spriteRenderer.color;
+        m_rb = GetComponent<Rigidbody2D>();
     }
 
     // Other enemies call this function
     public void UpdateHealth(int mod)
     {
+        // m_rb.Sleep();
         // If health is going down:
         if(health + mod <= health)
         {
@@ -32,8 +35,9 @@ public class PlayerHealth : MonoBehaviour
                 // Idk how to explain Coroutine. But we can run a function as if it were in Update()
                 StartCoroutine("Flash");
             }
+            --health;
         }
-        health += mod;
+        
 
         if (health > maxHealth)
         {
@@ -75,6 +79,7 @@ public class PlayerHealth : MonoBehaviour
             // Change him back to his normal color
             spriteRenderer.color = defaultColor;
             isHit = false;
+            // m_rb.WakeUp();
         }
     }
 }
