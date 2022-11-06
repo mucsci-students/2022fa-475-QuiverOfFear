@@ -33,36 +33,49 @@ public class PlayerHealth : MonoBehaviour
         m_anim = GetComponent<Animator>();
     }
 
-    // Other enemies call this function
+    // Other enemies call this function for damage.
     public void UpdateHealth(int mod) {
 
         if (isInvincible) return;
-        --health; 
 
-        // Dead
-        if (health <= 0) {
-            health = 0;
-            m_anim.SetBool("isDead", true);
-            m_rb.gravityScale = 20f;
-            m_anim.SetTrigger("die");
-            StartCoroutine(PlayerDied());
+        // print(mod);
+        if(health + mod < health);
+        {
+            health+=mod;
+        
+            // Dead
+            if (health <= 0) {
+                health = 0;
+                // Set animator settings to play death animation.
+                m_anim.SetBool("isDead", true);
+                m_anim.SetTrigger("die");
+
+                // Make player fall down haha.
+                m_rb.gravityScale = 20f;
+                StartCoroutine(PlayerDied());
+            }
+            
+            // Don't want player invincible at 0 hp
+            if (health > 0)
+            {
+                StartCoroutine(BecomeTemporarilyInvincible());
+            }
         }
         
-        if(health > maxHealth) {
-            // Don't over heal.
-            health = maxHealth;
-        }
-
-        if (health > 0)
-        {
-            StartCoroutine(BecomeTemporarilyInvincible());
+        if(health + mod > health) {
+        
+            health +=mod;
+            
+            // Don't wanna overheal.
+            if(health > maxHealth) {
+                health = maxHealth;
+            }
         }
     }
 
     private IEnumerator PlayerDied()
     {
-        
-
+        // Need the timer so we can play animations...
         yield return new WaitForSeconds(2f);
         
         gameObject.SetActive(false);
@@ -102,5 +115,4 @@ public class PlayerHealth : MonoBehaviour
 
         isInvincible = false;
     }
-
 }
