@@ -60,11 +60,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe9e7dc76f1d044498b9b4572ec0c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 50
-  colorChangeTimer: 0
-  invincibilityDeltaTime: 0
-  invincibilityDurationSeconds: 0
+  maxHealth: 3
+  health: 0
+  colorChangeTimer: 3
+  invincibilityDeltaTime: 0.15
+  invincibilityDurationSeconds: 1.5
 --- !u!114 &1442203756324240847
 MonoBehaviour:
   m_ObjectHideFlags: 0

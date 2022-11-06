@@ -127,7 +127,7 @@ namespace UnityStandardAssets._2D
 
             }
 
-            print("GROUNDED: " + m_Grounded + ". JUMP: " + jump + ". GROUND" + m_Anim.GetBool("Ground"));
+            //print("GROUNDED: " + m_Grounded + ". JUMP: " + jump + ". GROUND" + m_Anim.GetBool("Ground"));
               
             /*
                 Dynamic jump height, could turn into double jump if we desire.
