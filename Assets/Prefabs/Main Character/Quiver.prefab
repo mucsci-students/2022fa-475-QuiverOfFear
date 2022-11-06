@@ -62,8 +62,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  health: 0
+  health: 50
   colorChangeTimer: 0
+  invincibilityDeltaTime: 0
+  invincibilityDurationSeconds: 0
 --- !u!114 &1812668858970496179
 MonoBehaviour:
   m_ObjectHideFlags: 0

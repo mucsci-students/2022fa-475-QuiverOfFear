@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class Invincible : MonoBehaviour
 {
-    private bool invincible = false;
     public float invincibilityTime = 2f;
     private Rigidbody2D m_rb;
     private GameObject feet;
@@ -18,35 +17,29 @@ public class Invincible : MonoBehaviour
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        center = GetComponent<Transform>();
+        //center = GetComponent<Transform>();
     }
     
     void OnCollisionEnter2D(Collision2D collision) {
-        if(!invincible) 
+
+        //Debug.Log(center.name);
+        if(collision.gameObject.tag == "Enemies") 
         {
-            if(collision.gameObject.tag == "Enemies") 
-            {
-                StartCoroutine(Invulnerability(collision.gameObject));
+            // Knock back player & enemy
+            Vector2 playerDirection = (transform.position - collision.transform.position);
+            Vector2 playerKnockback = playerDirection * knockbackStrength*0.9f;
 
-                // Knock back player & enemy
-                Vector2 playerDirection = (center.transform.position - collision.transform.position);
-                Vector2 playerKnockback = playerDirection * knockbackStrength*0.9f;
-
-                print("Player " + center.transform.position);
-                print("Enemy " + collision.transform.position);
+            print("Player " + transform.position);
+            print("Enemy " + collision.transform.position);
                 
-                // print(playerDirection);
-                Vector2 enemyDirection = (collision.transform.position - transform.position).normalized;
-                Vector2 enemyKnockback = enemyDirection * knockbackStrength;
-                m_rb.gravityScale = 1;
-                m_rb.mass = .5f;
-                StartCoroutine(PlayerKnockBack(playerKnockback));
-                StartCoroutine(KnockBack(playerKnockback, enemyKnockback));
+            // print(playerDirection);
+            Vector2 enemyDirection = (collision.transform.position - transform.position).normalized;
+            Vector2 enemyKnockback = enemyDirection * knockbackStrength;
+            m_rb.gravityScale = 1;
+            m_rb.mass = .5f;
+            StartCoroutine(PlayerKnockBack(playerKnockback));
+            StartCoroutine(KnockBack(playerKnockback, enemyKnockback));
                 
-            }
-            else{
-                print("No Collider");
-            }
         }
 
          IEnumerator PlayerKnockBack(Vector2 playerKnockback)
@@ -71,23 +64,6 @@ public class Invincible : MonoBehaviour
 
         }
         
-        IEnumerator Invulnerability(GameObject collider) 
-        {
-            print(collider.name);
-            print(gameObject.name);
-            invincible = true;
-
-            Physics2D.IgnoreLayerCollision(6, 9, invincible);
-            Physics2D.IgnoreLayerCollision(7, 9, invincible);
-
-            yield return new WaitForSeconds(invincibilityTime);
-        
-            invincible = false;
-
-            Physics2D.IgnoreLayerCollision(6, 9, invincible);
-            Physics2D.IgnoreLayerCollision(7, 9, invincible);
-        }
-
     }
 
 }
