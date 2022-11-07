@@ -14,7 +14,6 @@ public class ArrowBehaviorLeft : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-
     void Update() 
     {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) *Mathf.Rad2Deg;

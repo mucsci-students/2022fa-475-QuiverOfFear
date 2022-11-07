@@ -18,7 +18,7 @@ public class Arrow : MonoBehaviour
 
     public int numberOfPoints;          // Amount of of points to display in the array.
     public float spaceBetweenPoints;    // Distance between points along the trajectory.
-    public bool showTrajectory;         // Boolean to control the display of the crosshair.
+    public bool toggleTrajectory;         // Boolean to control the display of the crosshair.
 
     private bool canAttack;
     private bool isDead;
@@ -29,7 +29,6 @@ public class Arrow : MonoBehaviour
     private float nextFireTime = 0f;
     public bool didShoot;
     public bool isPaused;
-
 
     private bool validShot;
     private Vector3 mousePos;                               // Mouse position.
@@ -42,9 +41,8 @@ public class Arrow : MonoBehaviour
     private float shootReleaseCounter;
     float holdTimeNormalized;
 
-
     private void Start() {
-        showTrajectory = false;
+        toggleTrajectory = false;
         canShootLeft = false;
         canShootRight = false;
         didShoot = false;
@@ -53,7 +51,7 @@ public class Arrow : MonoBehaviour
         shotSFX = GetComponent<AudioSource>();
         
         Debug.Log(player.name);
-        ShowTrajectory();
+        // ShowTrajectory();
         // validShot = false;
     }
 
@@ -68,18 +66,18 @@ public class Arrow : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            ShowTrajectory();
-        }
+        // if (Input.GetKeyDown(KeyCode.LeftShift))
+        // {
+        //     ToggleTrajectory();
+        // }
 
-        if(showTrajectory)
-        {
-            for(int i = 0; i < numberOfPoints; i++)
-            {
-                points[i].transform.position = PointPosition(i * spaceBetweenPoints);
-            }
-        }
+        // if(toggleTrajectory)
+        // {
+        //     for(int i = 0; i < numberOfPoints; i++)
+        //     {
+        //         points[i].transform.position = PointPosition(i * spaceBetweenPoints);
+        //     }
+        // }
 
         if(Time.time > nextFireTime)
         {
@@ -99,6 +97,14 @@ public class Arrow : MonoBehaviour
             shootReleaseCounter = Time.time - shootStartCounter;
             anim.SetBool("isCharging", false);
         }
+
+        // for (int i = 0; i < numberOfPoints; i++)
+        // {
+        //     points[i] = Instantiate(crosshairPrefab, shotPoint.position, Quaternion.identity);
+        // }
+
+        // float holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
+        // StartCoroutine(UpdateCrosshair(holdTimeNormalized));
   
         // Character facing right && mouse is in a 90 degree arc in front of him.
         if(faceRight && mousePos.x > player.transform.position.x)
@@ -137,8 +143,6 @@ public class Arrow : MonoBehaviour
         // }
 
     }
-
-
 
     // Pew pew time.
     public void Shoot() 
@@ -179,23 +183,69 @@ public class Arrow : MonoBehaviour
     //         return Quaternion.Euler(0,0, Mathf.Atan2(r.y, r.x) * Mathf.Rad2Deg);
     //     }
 
-    void ShowTrajectory()
+    void ToggleTrajectory()
     {
-        // showTrajectory = !showTrajectory;
-        //  for (int i = 0; i < numberOfPoints; i++)
-        //  {
-        //      points[i] = Instantiate(crosshairPrefab, -500* shotPoint.position, Quaternion.identity);
-        //  }
+        toggleTrajectory = !toggleTrajectory;
+         for (int i = 0; i < numberOfPoints; i++)
+         {
+             points[i] = Instantiate(crosshairPrefab, -500* shotPoint.position, Quaternion.identity);
+         }
     }
+    
+    
+    // public IEnumerator UpdateCrosshair(float holdTimeNormalized)
+    // {
+        
+    //     Camera mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    //     Vector3 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+    //     Vector2 direction = mousePos - transform.position;
+    //     Vector2 rotation = transform.position - mousePos;
+    //     float shotPower = holdTimeNormalized * 40f;
+        
 
-    // Where to place the points showing the trajectory.
-    Vector2 PointPosition(float t)
-    {
-        Vector2 direction = mousePos - transform.position;
-        Vector2 position = (Vector2)shotPoint.position + (direction.normalized * shotPower * t) + 0.5f * Physics2D.gravity * (t * t);
+    //     for(int i = 0; i < numberOfPoints; i++)
+    //     {
+    //         new Vector2 (direction.x, direction.y).normalized * shotPower;
+            
+    //         points[i].transform.position = PointPosition(i * spaceBetweenPoints);
+
+    //     }
         // Vector2 position = (Vector2)shotPoint.position + (direction.normalized * launchForce * t) + 0.5f * Physics2D.gravity * (t * t);
-        return position;
-    }
+        
+        // for (int i = 0; i < numberOfPoints; i++)
+    //         {
+    //             points[i] = Instantiate(crosshairPrefab, shotPoint.position, Quaternion.identity);
+    //         }
+
+        // yield return new WaitForSeconds(0f);
+        
+    // }
+
+    // void ShowTrajectory()
+    // {
+    //     if(toggleTrajectory){
+
+    //         for (int i = 0; i < numberOfPoints; i++)
+    //         {
+    //             points[i] = Instantiate(crosshairPrefab, shotPoint.position, Quaternion.identity);
+    //         }
+    //      }
+    // }
+
+    
+    
+    // Where to place the points showing the trajectory.
+    // Vector2 PointPosition(float t)
+    //{
+       // Vector2 direction = mousePos - transform.position;
+        //Vector2 position = (Vector2)shotPoint.position + (direction.normalized * shotPower * t) + 0.5f * Physics2D.gravity * (t * t);
+        // Vector2 position = (Vector2)shotPoint.position + (direction.normalized * launchForce * t) + 0.5f * Physics2D.gravity * (t * t);
+
+
+
+
+    //     return position;
+    // }
 
 
     // Hides the shell after every shot.
