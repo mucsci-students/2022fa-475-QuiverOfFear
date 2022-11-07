@@ -37,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
             PlayerPrefs.SetInt("health", maxHealth);
 
         maxHealth = PlayerPrefs.GetInt("health");
+        health = maxHealth;
     }
 
     // Other enemies call this function for damage.
