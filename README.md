@@ -5,19 +5,19 @@ gaping caverns (WIP) as he proves his courage once and for all!
 ## Downloading
 ### Windows
 
-1. [Download the .zip file](-)
+1. [Download the .zip file](https://drive.google.com/file/d/1I4cbJ-sYKI0V67xZ_n09RxUgEu20GCiQ/view)
 2. Unzip the file through file explorer
 3. Run QuiverOfFear.exe by double clicking
 4. Enjoy!
 
 ### Mac
-1. [Download the .zip file](-)
+1. [Download the .zip file](https://drive.google.com/file/d/1GUHjz_MnonjUFexO6IEN18sUTIsimQb4/view)
 2. Unzip it, either in finder or by navigating to the folder you downloaded it with the terminal: ```unzip QuiverOfFearMac.zip```
 3. If you haven't already, open a terminal session and navigate to the folder where you downloaded it. Run this command to set the executable permissions: ```chmod a+x QuiverOfFearMac.app/Contents/MacOS/* ```
 3. Double click to try and open. Mac will give you a security error.
 4. Navigate to System Preferences > Security and Privacy > General tab. 
-5. At the bottom there should be a button for an app you tried to recently open, QuiverOfFearMac. Click run anyways.
-6. Enjoy
+5. At the bottom there should be a button for an app you tried to recently open, QuiverOfFearMac. Click run.
+6. Enjoy!
 
 ## Credits
 ### Developers 
