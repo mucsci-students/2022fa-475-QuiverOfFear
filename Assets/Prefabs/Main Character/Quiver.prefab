@@ -1042,6 +1042,8 @@ MonoBehaviour:
   shootCooldown: 0.5
   didShoot: 0
   isPaused: 0
+  spriteTimer: 0
+  coolDownImage: {fileID: 6904972276177228520, guid: 7ee5831fc255b214f9d537ad03e53f9a, type: 3}
   forcePower: 40
   maxForceHoldTime: 1
 --- !u!82 &720046818

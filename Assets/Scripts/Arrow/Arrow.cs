@@ -29,7 +29,9 @@ public class Arrow : MonoBehaviour
     private float nextFireTime = 0f;
     public bool didShoot;
     public bool isPaused;
+    public float spriteTimer;
 
+    public Image coolDownImage;
     private bool validShot;
     private Vector3 mousePos;                               // Mouse position.
     private Camera mainCam;                                 // Camera position.
@@ -49,8 +51,11 @@ public class Arrow : MonoBehaviour
         anim = transform.parent.parent.GetComponent<Animator>();
         points = new GameObject[numberOfPoints];
         shotSFX = GetComponent<AudioSource>();
+        spriteTimer = shootCooldown;
+        coolDownImage.GetComponent<Image>();
         
         Debug.Log(player.name);
+    
         // ShowTrajectory();
         // validShot = false;
     }
@@ -61,6 +66,7 @@ public class Arrow : MonoBehaviour
         canAttack = anim.GetBool("canAttack");
         isDead = anim.GetBool("isDead");
         isCharging = anim.GetBool("isCharging");
+        spriteTimer = shootCooldown;
 
         faceRight = anim.GetBool("FacingRight");
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -128,8 +134,20 @@ public class Arrow : MonoBehaviour
                     Shoot();
                     nextFireTime = Time.time + shootCooldown;
                     validShot = false;
+                    coolDownImage.fillAmount = 0;
                 }
             }
+        }
+
+        if(didShoot){
+            coolDownImage.fillAmount += 1.0f / spriteTimer * Time.deltaTime;
+
+            if(coolDownImage.fillAmount >= 1)
+            {
+                print(coolDownImage.name);
+                coolDownImage.fillAmount = 1.0f;
+                didShoot = false;
+            } 
         }
 
         // transform.rotation = LookAtTarget(mousePos - transform.position);
@@ -174,8 +192,8 @@ public class Arrow : MonoBehaviour
                 newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
                 shotSFX.Play();
             }
+            didShoot = true;
         }
-
     }
             
     // public Quaternion LookAtTarget(Vector2 r)
