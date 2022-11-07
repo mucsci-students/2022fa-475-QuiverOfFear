@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuCommands : MonoBehaviour
 {
+    private void Awake()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     public void StartGameWoods(int checkpoint)
     {
         PlayerPrefs.SetInt("level", checkpoint);
