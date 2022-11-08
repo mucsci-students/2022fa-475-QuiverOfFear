@@ -1039,7 +1039,7 @@ MonoBehaviour:
   numberOfPoints: 40
   spaceBetweenPoints: 0.025
   toggleTrajectory: 0
-  shootCooldown: 0.5
+  shootCooldown: 0.25
   didShoot: 0
   isPaused: 0
   spriteTimer: 0
