@@ -11,7 +11,7 @@ gaping caverns (WIP) as he proves his courage once and for all!
 ## Downloading
 ### Windows
 
-1. [Download the .zip file](https://drive.google.com/file/d/1TNOgImKTXv5b_9U3GvzqRJ13aah52kfi/view)
+1. [Download the .zip file](https://drive.google.com/file/d/1I4cbJ-sYKI0V67xZ_n09RxUgEu20GCiQ/view?usp=share_link)
 2. Unzip the file through file explorer
 3. Run QuiverOfFear.exe by double clicking
 4. Enjoy!
