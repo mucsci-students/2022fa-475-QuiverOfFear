@@ -2,6 +2,12 @@
 A 2D Metroidvania featuring a young and timid archer named Quiver. Follow his adventures through sprawling forests and
 gaping caverns (WIP) as he proves his courage once and for all!
 
+## Controls
+- WASD Movement
+- Left Click to shoot an arrow
+- Right Click to use your grappling gun
+- Escape to Pause the game
+
 ## Downloading
 ### Windows
 
