@@ -25,8 +25,10 @@ public class Arrow : MonoBehaviour
     private bool isCharging;
     private bool canShootRight;         // Allowed to shoot right.
     private bool canShootLeft;          // Allowed to shoot left.
+
     public float shootCooldown = 0.25f;
-    private float nextFireTime = 0f;
+    private float nextFireTime;         // Current time + shootCooldown
+
     public bool didShoot;
     public bool isPaused;
     public float spriteTimer;
@@ -53,7 +55,6 @@ public class Arrow : MonoBehaviour
         shotSFX = GetComponent<AudioSource>();
         spriteTimer = shootCooldown;
         coolDownImage.GetComponent<Image>();
-        
         Debug.Log(player.name);
     
         // ShowTrajectory();
@@ -85,45 +86,56 @@ public class Arrow : MonoBehaviour
         //     }
         // }
 
-         if(faceRight && mousePos.x > player.transform.position.x)
+        // Player facing right and mouse is in a 90 degree arc in front of him.
+        if(faceRight && mousePos.x > player.transform.position.x)
             {canShootRight = true;}
         else
             {canShootRight = false;}
-        
+
+
         // Player facing left and mouse is in a 90 degree arc in front of him.
         if(!faceRight && mousePos.x < player.transform.position.x)
             {canShootLeft = true;}
         else
             {canShootLeft = false;}
 
-        if(Time.time >= nextFireTime)
-        {
-            anim.SetBool("canAttack", true);
-        }
-        else{
-            anim.SetBool("canAttack", false);
-        }
+        if(canShootLeft || canShootRight){
 
-        if(canAttack && Input.GetMouseButtonDown(0)) {
-            validShot = true;
-            anim.SetBool("isCharging", true);
-            shootStartCounter = Time.time;
-        }
-        
-        if(Time.time > nextFireTime && canShootLeft || canShootRight && validShot )
-        {
-            // If left click is released
+            if(Input.GetMouseButtonDown(0)) 
+            {
+                CheckShot();
+            }
+
+            if(isCharging)
+            {
+                shootReleaseCounter += Time.deltaTime;
+            }
+
             if(Input.GetMouseButtonUp(0))
             {
-                shootReleaseCounter = Time.time - shootStartCounter;
-                Shoot();
-                anim.SetBool("isCharging", false);
-                nextFireTime = Time.time + shootCooldown;
-                coolDownImage.fillAmount = 0;
+                if (validShot){
+                    print("valid");
+                    
+                    print(shootReleaseCounter);
+                    Shoot();
+
+                    anim.SetBool("isCharging", false);
+                    coolDownImage.fillAmount = 0;
+                    nextFireTime = Time.time + shootCooldown;
+                }
             }
         }
 
-
+        // If charging and move mouse out of range.
+        if(isCharging && !canShootLeft && !canShootRight)
+        {
+            shootReleaseCounter = 0.1f;
+            Shoot();
+            anim.SetBool("isCharging", false);
+            coolDownImage.fillAmount = 0;
+            nextFireTime = Time.time + shootCooldown;
+        }
+        
         // for (int i = 0; i < numberOfPoints; i++)
         // {
         //     points[i] = Instantiate(crosshairPrefab, shotPoint.position, Quaternion.identity);
@@ -132,12 +144,12 @@ public class Arrow : MonoBehaviour
         // float holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
         // StartCoroutine(UpdateCrosshair(holdTimeNormalized));
        
-        if(didShoot){
+        if(didShoot)
+        {
             coolDownImage.fillAmount += 1.0f / spriteTimer * Time.deltaTime;
-
+            
             if(coolDownImage.fillAmount >= 1)
             {
-                print(coolDownImage.name);
                 coolDownImage.fillAmount = 1.0f;
                 didShoot = false;
             } 
@@ -155,15 +167,33 @@ public class Arrow : MonoBehaviour
 
     }
 
+    public void CheckShot()
+    {
+        if(Time.time >= nextFireTime)
+        {
+            anim.SetBool("canAttack", true);
+            validShot = true;
+            anim.SetBool("isCharging", true);
+            shootStartCounter = Time.time;
+        }
+        else
+        {
+            anim.SetBool("canAttack", false);
+            print("bad check shot");
+            validShot = false;
+            print(Time.deltaTime);
+        }
+    }
+
     // Pew pew time.
     public void Shoot() 
     {
         GameObject pauseMenu = GameObject.Find("PauseMenu");
         isPaused = pauseMenu.GetComponent<PauseMenu>().paused;
+
         if(!isPaused && !isDead)
         {
             holdTimeNormalized = Mathf.Clamp01(shootReleaseCounter / maxForceHoldTime);
-            //Debug.Log(holdTimeNormalized);
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -171,24 +201,17 @@ public class Arrow : MonoBehaviour
             Vector2 rotation = transform.position - mousePos;
 
             shotPower = holdTimeNormalized * forcePower;
+                
+            GameObject newArrow = Instantiate(arrow, shotPoint.position, transform.rotation);
+            newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
 
-            if(!faceRight)
-            {
-                GameObject newArrow = Instantiate(arrow, shotPoint.position, transform.rotation);
-                newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
-
-                shotSFX.Play();
-            }
-            else
-            {
-                GameObject newArrow = Instantiate(arrow, shotPoint.position, transform.rotation);
-                newArrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x, direction.y).normalized * shotPower;
-                shotSFX.Play();
-            }
+            shotSFX.Play();
+                
             didShoot = true;
+            shootReleaseCounter = 0;
+            
             
         }
-        validShot = false;
     }
             
     // public Quaternion LookAtTarget(Vector2 r)
